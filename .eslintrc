@@ -1,0 +1,131 @@
+{
+    "root": true,
+
+    "env": {
+        "es6": true,
+        "node": true,
+        "mocha": true
+    },
+
+    "parser": "babel-eslint",
+
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+
+    "plugins": ["babel"],
+
+    "extends": ["eslint:recommended", "./config/eslint/default.js"],
+
+    "rules": {
+        "max-len": ["error", 140],
+
+        "indent": ["error", 4, {
+            "SwitchCase": 2
+        }],
+
+        "brace-style": ["error", "1tbs", {
+            "allowSingleLine": true
+        }],
+
+        "block-spacing": ["error"],
+
+        "comma-spacing": ["error"],
+
+        "keyword-spacing": ["error"],
+
+        "eol-last": ["error", "always"],
+
+        "no-tabs": "off",
+
+        "comma-dangle": ["warn", "never"],
+
+        "quotes": ["error", "single"],
+
+        "new-cap": ["error", {
+            "newIsCapExceptionPattern": "[^a-z]*$"
+        }],
+
+        "global-require": "warn",
+
+        "no-mixed-operators": "warn",
+
+        "vars-on-top": "warn",
+
+        "prefer-template": "warn",
+
+        "no-var": "warn",
+
+        "no-shadow": "warn",
+
+        "no-new": "warn",
+
+        "class-methods-use-this": "off",
+
+        "prefer-rest-params": "warn",
+
+        "quote-props": ["error", "as-needed", {
+            "numbers": true
+        }],
+
+        "no-plusplus": "warn",
+
+        "prefer-arrow-callback": "warn",
+
+        "space-in-parens": "warn",
+
+        "consistent-return": "warn",
+
+        "key-spacing": "warn",
+
+        "one-var": ["error", "never"],
+
+        "one-var-declaration-per-line": "warn",
+
+        "no-underscore-dangle": "off",
+
+        "no-useless-escape": "warn",
+
+        "wrap-iife": ["error", "inside"],
+
+        "no-useless-rename": "warn",
+
+        "prefer-spread": "warn",
+
+        "newline-per-chained-call": "warn",
+
+        "no-unneeded-ternary": "warn",
+
+        "operator-assignment": "warn",
+
+        "no-extra-bind": "warn",
+
+        "no-param-reassign": "warn",
+
+        "radix": "warn",
+
+        "no-nested-ternary": "warn",
+
+        "no-useless-constructor": "warn",
+
+        "camelcase": "warn",
+
+        "array-callback-return": "warn",
+
+        "no-restricted-properties": "warn",
+
+        "arrow-body-style": "warn",
+
+        "prefer-destructuring": "warn",
+
+        "no-restricted-globals": "warn",
+
+        "function-paren-newline": "warn",
+
+        "no-compare-neg-zero": "warn"
+    }
+}
