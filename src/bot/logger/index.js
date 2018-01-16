@@ -7,25 +7,31 @@ class Logger {
     info(msg, type) {
         const _type = type || 'info';
 
-        this.render(chalk.gray(`[${_type}]`), chalk.white(msg));
+        this.render(chalk.white(`[${_type}]`), msg);
+    }
+
+    section(msg, type) {
+        const _type = type || 'info';
+
+        this.render(chalk.white(`[${_type}]`), chalk.cyan(msg));
     }
 
     warn(msg, type) {
         const _type = type || 'warn';
 
-        this.render(chalk.gray(`[${_type}]`), chalk.yellow(msg));
+        this.render(chalk.white(`[${_type}]`), chalk.yellow(msg));
     }
 
     error(msg, type) {
         const _type = type || 'error';
 
-        this.render(chalk.gray(`[${_type}]`), chalk.red(msg));
+        this.render(chalk.white(`[${_type}]`), chalk.red(msg));
     }
 
     success(msg, type) {
         const _type = type || 'info';
 
-        this.render(chalk.gray(`[${_type}]`), chalk.green(msg));
+        this.render(chalk.white(`[${_type}]`), chalk.green(msg));
     }
 
     render(type, msg) {

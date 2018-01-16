@@ -18,12 +18,10 @@ class Config {
     /**
      * @check
      */
-    check(bot) {
+    check() {
         return new Promise((resolve, reject) => {
-            bot.logger.info('Checking config...');
-
             // check config
-            if (!this.config || Object.keys(this.config).length == 0) {
+            if (!this.config || Object.keys(this.config).length === 0) {
                 if (!fs.existsSync(path.join(__dirname, `../../config/${process.env.NODE_CONFIG_ENV}.js`))) {
                     reject(new Error(`Config file '/config/${process.env.NODE_CONFIG_ENV}.js' not found.`));
                 } else {
@@ -33,17 +31,17 @@ class Config {
 
             // bot.id
             if (!this.has('bot.id') || this.get('bot.id') === '') {
-                reject(new Error('{bot.id} is empty. Please set \'bot.id\' in the config file.'));
+                reject(new Error('Param {bot.id} is empty. Please set {bot.id} in the config file.'));
             }
 
             // bot.token
             if (!this.has('bot.token') || this.get('bot.token') === '') {
-                reject(new Error('{bot.token} is empty. Please set \'bot.token\' in the config file.'));
+                reject(new Error('Param {bot.token} is empty. Please set {bot.token} in the config file.'));
             }
 
             // commands.prefix
             if (!this.has('commands.prefix') || this.get('commands.prefix') === '') {
-                reject(new Error('{commands.prefix} is empty. Please set \'commands.prefix\' in the config file.'));
+                reject(new Error('Param {commands.prefix} is empty. Please set {commands.prefix} in the config file.'));
             }
 
 

@@ -56,7 +56,7 @@ class Parser {
                         type: 'command',
                         name: name,
                         params: params,
-                        message: message
+                        input: message
                     };
                 }
             }
@@ -64,7 +64,7 @@ class Parser {
             if (command) {
                 resolve(command);
             } else {
-                reject('Received message is not a command.');
+                reject(message);
             }
         });
     }
