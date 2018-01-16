@@ -33,7 +33,7 @@ class Parser {
 
             // check commands.channels
             if (!channels.length || channels.indexOf(channelId) !== -1 || channelType === 'dm' || message.isMentioned(id)) {
-                if (content.startsWith(this.prefix)) {
+                if (channelType === 'dm' || content.startsWith(this.prefix)) {
                     commands = content.split(' ').filter(n => n);
 
                     // if mentioned, then remove first part of message, like '<@012345678912345678>'
@@ -53,10 +53,10 @@ class Parser {
                     let params = commands.slice(1).map(n => n.trim());
 
                     command = {
-                        type: 'command',
                         name: name,
                         params: params,
-                        input: message
+                        client: this.client,
+                        message: message
                     };
                 }
             }

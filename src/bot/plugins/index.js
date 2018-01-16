@@ -22,17 +22,21 @@ class Plugins extends Events {
      * @register
      */
     register(plugin) {
-        const {id, name, commands} = plugin;
+        const {id, name, enabled, commands, params} = plugin;
 
         this.logger.info(`Loading '${name}' plugin...`);
 
         if (!plugins[id]) {
-            this.logger.error(`Loading '${name}' plugin failed (not found).`)
+            this.logger.error(`Loading '${name}' plugin failed. Plugin not found.`);
+        } else if (!enabled) {
+            this.logger.warn(`Loading '${name}' plugin stopped. Plugin is disabled.`);
         } else {
-            this.plugins[id] = plugin;
+            this.plugins[id] = new plugins[id](this.bot, params);
 
             if (commands) {
-                commands.map(command => this.bot.commands.register(command, id));
+                this.logger.info(`Registering '${name}' plugin commands...`);
+
+                commands.map(command => this.bot.commands.register(command, this.plugins[id]));
             }
         }
     }

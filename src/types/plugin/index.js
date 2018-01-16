@@ -2,6 +2,16 @@
 
 import Events from 'events';
 
-class Plugin extends Events {}
+class Plugin extends Events {
+    /**
+     * @constructor
+     */
+    constructor(bot, params) {
+        super();
+
+        this.bot = bot;
+        this.params = params;
+    }
+}
 
 export default Plugin;

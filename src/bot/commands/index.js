@@ -6,8 +6,11 @@ class Commands extends Events {
     /**
      * @constructor
      */
-    constructor() {
+    constructor(bot) {
         super();
+
+        this.bot = bot;
+        this.logger = bot.logger;
 
         this.commands = {};
     }
@@ -18,6 +21,11 @@ class Commands extends Events {
      */
     register(command, handler) {
         this.commands[command] = handler;
+    }
+
+
+    find(command) {
+        return this.commands[command];
     }
 }
 

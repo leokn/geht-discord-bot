@@ -21,7 +21,7 @@ class Bot extends Events {
 
         this.modules  = new Modules(this);
         this.plugins  = new Plugins(this);
-        this.commands = new Commands();
+        this.commands = new Commands(this);
     }
 
 
@@ -114,6 +114,20 @@ class Bot extends Events {
             }
 
             discord.on('started', () => resolve('Started.'));
+
+            discord.on('command', command => {
+                const handler = this.commands.find(command.name);
+
+                if (!handler) {
+                    this.logger.warn(`Command '${command.name}' not registered.`, 'command');
+                } else {
+                    this.logger.info(`Executing '${command.name}' ...`, 'command');
+
+                    handler.execute(command)
+                        .then(() => this.logger.info(`Executing '${command.name}' complete.`, 'command'))
+                        .catch(error => this.logger.error(error));
+                }
+            });
 
             return discord.start();
         });

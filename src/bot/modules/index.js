@@ -12,7 +12,7 @@ class Modules extends Events {
         super();
 
         this.bot = bot;
-        this.logger = this.bot.logger;
+        this.logger = bot.logger;
 
         this.modules = {};
     }
@@ -37,8 +37,8 @@ class Modules extends Events {
     /**
      * @get
      */
-    get(module) {
-        return this.modules[module];
+    get(id) {
+        return this.modules[id];
     }
 }
 
