@@ -18,39 +18,41 @@ class Config {
     /**
      * @check
      */
-    check() {
+    check(bot) {
+        bot.log.info('Checking configuration...');
+
         return new Promise((resolve, reject) => {
             // check config
             if (!this.config || Object.keys(this.config).length === 0) {
                 if (!fs.existsSync(path.join(__dirname, `../../config/${process.env.NODE_CONFIG_ENV}.js`))) {
-                    reject(new Error(`Config file '/config/${process.env.NODE_CONFIG_ENV}.js' not found.`));
+                    return reject(new Error(`Config file '/config/${process.env.NODE_CONFIG_ENV}.js' not found.`));
                 } else {
-                    reject(new Error(`Config file '/config/${process.env.NODE_CONFIG_ENV}.js' is empty.`));
+                    return reject(new Error(`Config file '/config/${process.env.NODE_CONFIG_ENV}.js' is empty.`));
                 }
             }
 
             // bot.id
             if (!this.has('bot.id') || this.get('bot.id') === '') {
-                reject(new Error('Param {bot.id} is empty. Please set {bot.id} in the config file.'));
+                return reject(new Error('Param {bot.id} is empty. Please set {bot.id} in the config file.'));
             }
 
             // bot.token
             if (!this.has('bot.token') || this.get('bot.token') === '') {
-                reject(new Error('Param {bot.token} is empty. Please set {bot.token} in the config file.'));
+                return reject(new Error('Param {bot.token} is empty. Please set {bot.token} in the config file.'));
             }
 
             // commands.prefix
             if (!this.has('commands.prefix') || this.get('commands.prefix') === '') {
-                reject(new Error('Param {commands.prefix} is empty. Please set {commands.prefix} in the config file.'));
+                return reject(new Error('Param {commands.prefix} is empty. Please set {commands.prefix} in the config file.'));
             }
 
 
             // check sharding option
             if (this.has('sharding.enabled') && this.get('sharding.enabled')) {
-                reject(new Error('Sharding not implemented yet. Please, disable this option (sharding.enabled) in config file.'));
+                return reject(new Error('Sharding is not implemented yet. Please, disable this option {sharding.enabled} in config file.'));
             }
 
-            resolve();
+            return resolve();
         });
     }
 

@@ -1,136 +1,58 @@
 // $ID: index.js, 12 Jan 2018, 14:51, Leonid 'n3o' Knyazev $
 
-import Events from 'events';
-
 import Config from './config';
 import Logger from './logger';
 
-import Modules from './modules';
-import Plugins from './plugins';
-import Commands from './commands';
-
-class Bot extends Events {
+class Bot {
     /**
      * @constructor
      */
     constructor() {
-        super();
-
+        this.log = new Logger();
         this.config = new Config();
-        this.logger = new Logger();
-
-        this.modules  = new Modules(this);
-        this.plugins  = new Plugins(this);
-        this.commands = new Commands(this);
     }
 
 
     /**
      * @init
      */
-    init() {
-        return new Promise((resolve, reject) => {
-            // print environment mode
-            if (process.env.NODE_ENV === 'production') {
-                this.logger.print(' Production mode ', 'whiteBright', 'bgGreen');
-                this.logger.print('');
-            } else {
-                this.logger.print(' Development mode ', 'whiteBright', 'bgRed');
-                this.logger.print('');
-            }
+    async init() {
+        this.log.section('Init...');
 
-            this.logger.info('Starting...');
-
-            return this.configure()
-                .then(() => this.load())
-                .then(() => resolve())
-                .catch(error => reject(error));
-        });
+        // Check configuration
+        await this.config.check(this);
     }
 
 
     /**
-     * @configure
+     * @load
      */
-    configure() {
-        return new Promise((resolve, reject) => {
-            this.logger.section('Checking config...');
-
-            this.config.check()
-                .then(() => resolve())
-                .catch(error => reject(error));
-        });
-    }
-
-
-    /**
-     * @loading
-     */
-    load() {
-        return new Promise(resolve => {
-            // Loading modules...
-            const modules = this.config.get('modules');
-
-            this.logger.section('Loading modules...');
-
-            if (!Array.isArray(modules) || modules.length === 0) {
-                this.logger.warn('No modules to load.');
-            } else {
-                modules.forEach(module => {
-                    this.modules.register(module);
-                });
-            }
-
-
-            // Loading plugins...
-            const plugins = this.config.get('plugins');
-
-            this.logger.section('Loading plugins...');
-
-            if (!Array.isArray(plugins) || plugins.length === 0) {
-                this.logger.warn('No plugins to load.');
-            } else {
-                plugins.forEach(plugin => {
-                    this.plugins.register(plugin);
-                });
-            }
-
-            return resolve();
-        });
+    async load() {
+        this.log.section('Loading...');
     }
 
 
     /**
      * @start
      */
-    start() {
-        return new Promise((resolve, reject) => {
-            this.logger.section('Starting Discord client...');
+    async start() {
+        // print environment mode
+        if (process.env.NODE_ENV === 'production') {
+            this.log.print(' Production mode ', 'whiteBright', 'bgGreen');
+            this.log.print('');
+        } else {
+            this.log.print(' Development mode ', 'whiteBright', 'bgRed');
+            this.log.print('');
+        }
 
-            const discord = this.modules.get('discord');
+        // initializing and loading...
+        await this.init();
+        await this.load();
 
-            if (!discord) {
-                return reject('Module \'Discord\' not found.');
-            }
+        // starting
+        this.log.section('Staring...');
 
-            discord.on('started', () => resolve('Started.'));
-
-            discord.on('command', command => {
-                const handler = this.commands.find(command.name);
-
-                if (!handler) {
-                    this.logger.warn(`Command '${command.name}' not registered.`, 'command');
-                } else {
-                    this.logger.info(`Executing '${command.name}' ...`, 'command');
-
-                    handler.execute(command)
-                        .then(() => this.logger.info(`Executing '${command.name}' complete.`, 'command'))
-                        .catch(error => this.logger.error(error));
-                }
-            });
-
-            return discord.start();
-        });
+        return 'Started.';
     }
 }
 

@@ -4,8 +4,4 @@ import Module  from './module';
 import Plugin from './plugin';
 import Command from './command';
 
-export default {
-    Module: Module,
-    Plugin: Plugin,
-    Command: Command
-};
+export { Module, Plugin, Command };
