@@ -3,6 +3,8 @@
 import Config from './config';
 import Logger from './logger';
 
+import Modules from './modules';
+
 class Bot {
     /**
      * @constructor
@@ -10,6 +12,8 @@ class Bot {
     constructor() {
         this.log = new Logger();
         this.config = new Config();
+
+        this.modules = new Modules(this);
     }
 
 
@@ -29,6 +33,8 @@ class Bot {
      */
     async load() {
         this.log.section('Loading...');
+
+        await this.modules.load();
     }
 
 

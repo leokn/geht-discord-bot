@@ -7,11 +7,11 @@
     "license": "MIT",
     "homepage": "https://discord.geht.team",
     "bugs": {
-        "url": "https://git.knyazev.me/geht/discord.geht.team/issues"
+        "url": "https://git.knyazev.me/geht/discord/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git@git.knyazev.me:geht/discord.geht.team.git"
+        "url": "git@git.knyazev.me:geht/discord.git"
     },
     "scripts": {
         "lint": "eslint ./src",
