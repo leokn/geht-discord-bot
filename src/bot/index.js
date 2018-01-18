@@ -13,6 +13,7 @@ class Bot {
         this.log = new Logger();
         this.config = new Config();
 
+        // modules manager
         this.modules = new Modules(this);
     }
 
@@ -23,7 +24,7 @@ class Bot {
     async init() {
         this.log.section('Init...');
 
-        // Check configuration
+        // checking configuration
         await this.config.check(this);
     }
 
@@ -34,7 +35,11 @@ class Bot {
     async load() {
         this.log.section('Loading...');
 
+        // loading modules
         await this.modules.load();
+
+        // loading plugins
+        this.log.section('Loading plugins...');
     }
 
 
@@ -57,6 +62,13 @@ class Bot {
 
         // starting
         this.log.section('Staring...');
+
+        // starting discord client
+        const discord = this.modules.get('discord');
+
+        //console.log('DISCORD:', discord);
+
+        await discord.start();
 
         return 'Started.';
     }

@@ -3,6 +3,8 @@
 import npm from 'npm';
 import path from 'path';
 
+import { Module } from '../../types';
+
 class Modules {
     /**
      * @constructor
@@ -29,27 +31,30 @@ class Modules {
         const mods = Object.keys(modules); // Modules names to check
 
         // trying to load modules
-        // if module loading invoke exception, the check this module dependencies
-        // if module dependencies exists, the add it to packages array for install
+        // if module loading invoke exception, then check this module dependencies
+        // if module dependencies exists, then add it to packages array for install
         mods.forEach(name => {
             const modulePath = path.join(this.params.path, name);
 
             try {
                 require(modulePath); // eslint-disable-line global-require
+
                 this.checked.push(name);
             } catch (error) {
                 let modulePackage;
                 let moduleDependencies = [];
 
                 try {
-                    modulePackage = require(path.join(modulePath, 'package.json'));
-                } catch (e) {}
+                    modulePackage = require(path.join(modulePath, 'package.json')); // eslint-disable-line global-require
+                } catch (e) {
+                    throw new Error(e);
+                }
 
                 if (!modulePackage) {
                     this.checked.push(name);
                 } else if (modulePackage.dependencies) {
-                    Object.keys(modulePackage.dependencies).forEach(deps => {
-                        moduleDependencies.push(`${deps}@${modulePackage.dependencies[deps]}`);
+                    Object.keys(modulePackage.dependencies).forEach(moduleDeps => {
+                        moduleDependencies.push(`${moduleDeps}@${modulePackage.dependencies[moduleDeps]}`);
                     });
 
                     if (!deps[name]) {
@@ -82,9 +87,9 @@ class Modules {
                     summary: false,
                     logstream: null,
                     loglevel: 'silent'
-                }, (error) => {
-                    if (error) {
-                        return reject(error);
+                }, (npmLoadError) => {
+                    if (npmLoadError) {
+                        return reject(npmLoadError);
                     }
 
                     // @LIFE-HACK
@@ -94,9 +99,9 @@ class Modules {
                     // set console.log to dummy function
                     console.log = function() {};
 
-                    npm.commands.install(packages, (error) => {
-                        if (error) {
-                            return reject(error);
+                    return npm.commands.install(packages, (npmInstallError) => {
+                        if (npmInstallError) {
+                            return reject(npmInstallError);
                         }
 
                         // restore console.log function
@@ -105,9 +110,9 @@ class Modules {
                         return resolve();
                     });
                 });
-            } else {
-                return resolve();
             }
+
+            return resolve();
         });
     }
 
@@ -118,9 +123,10 @@ class Modules {
     async load() {
         const modules = this.bot.config.get('modules');
 
-        // Checking modules dependencies
+        // checking modules dependencies
         await this.preload(modules);
 
+        // loading modules
         this.bot.log.section('Loading modules...');
 
         Object.keys(modules).forEach(name => {
@@ -128,8 +134,35 @@ class Modules {
                 this.bot.log.warn(`Module '${name}' not loaded.`);
             } else {
                 this.bot.log.info(`Loading '${name}' module...`);
+
+                const modulePath = path.join(this.params.path, name);
+                const moduleClass = require(modulePath).default; // eslint-disable-line global-require
+
+                this.modules[name] = new moduleClass(this.bot, modules[name]);
             }
         });
+    }
+
+
+    /**
+     * @get
+     */
+    get(name) {
+        if (!this.has(name)) {
+            this.bot.log.warn(`Module '${name}' not found.`);
+
+            return undefined;
+        }
+
+        return this.modules[name];
+    }
+
+
+    /**
+     * @has
+     */
+    has(name) {
+        return (this.modules[name] && this.modules[name] instanceof Module);
     }
 }
 
