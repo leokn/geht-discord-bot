@@ -47,7 +47,7 @@ class Modules {
                 try {
                     modulePackage = require(path.join(modulePath, 'package.json')); // eslint-disable-line global-require
                 } catch (e) {
-                    throw new Error(e);
+                    // continue regardless of error
                 }
 
                 if (!modulePackage) {
@@ -80,7 +80,7 @@ class Modules {
                     this.checked.push(name);
                 });
 
-                npm.load({
+                return npm.load({
                     save: false,
                     loaded: false,
                     progress: false,
@@ -110,9 +110,9 @@ class Modules {
                         return resolve();
                     });
                 });
+            } else {
+                return resolve();
             }
-
-            return resolve();
         });
     }
 

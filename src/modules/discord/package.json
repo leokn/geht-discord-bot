@@ -1,11 +1,14 @@
 {
     "name": "discord",
+    "private": true,
     "description": "",
     "version": "0.0.1",
 
-    "author": "",
-    "license": "MIT",
-    "homepage": "https://discord.geht.team",
+    "author": {
+        "name": "Leonid Knyazev",
+        "email": "leonid@knyazev.me",
+        "url": "https://knyazev.me/"
+    },
 
     "main": "index.js",
 

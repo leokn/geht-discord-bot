@@ -1,11 +1,17 @@
 {
     "name": "root",
-    "description": "",
-    "version": "0.0.1",
     "private": true,
-    "author": "",
+    "description": "",
+    "keywords": [],
+    "version": "0.0.1",
     "license": "MIT",
     "homepage": "https://discord.geht.team",
+    "author": {
+        "name": "Leonid Knyazev",
+        "email": "leonid@knyazev.me",
+        "url": "https://knyazev.me/"
+    },
+    "contributors": [],
     "bugs": {
         "url": "https://git.knyazev.me/geht/discord/issues"
     },
