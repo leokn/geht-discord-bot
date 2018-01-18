@@ -1,15 +1,18 @@
 // $ID: index.js, 12 Jan 2018, 14:51, Leonid 'n3o' Knyazev $
 
+import Events from 'events';
+
 import Config from './config';
 import Logger from './logger';
-
 import Modules from './modules';
 
-class Bot {
+class Bot extends Events {
     /**
      * @constructor
      */
     constructor() {
+        super();
+
         this.log = new Logger();
 
         this.config = new Config();
@@ -76,12 +79,8 @@ class Bot {
         // starting
         this.log.section('Staring...');
 
-        // starting discord client
-        const discord = this.modules.get('discord');
-
-        await discord.start();
-
-        return 'Started.';
+        // connecting discord client
+        return await this.modules.get('discord').connect();
     }
 }
 

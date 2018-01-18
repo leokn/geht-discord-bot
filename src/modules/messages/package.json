@@ -1,6 +1,6 @@
 {
-    "name": "discord",
-    "description": "Discord client.",
+    "name": "messages",
+    "description": "Discord messages handler.",
     "version": "0.0.1",
     "private": true,
 
@@ -12,7 +12,5 @@
 
     "main": "index.js",
 
-    "dependencies": {
-        "discord.js": "latest"
-    }
+    "dependencies": {}
 }

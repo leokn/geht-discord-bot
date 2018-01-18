@@ -129,7 +129,7 @@ class Modules {
         // loading modules
         this.bot.log.section('Loading modules...');
 
-        Object.keys(modules).forEach(name => {
+        Object.keys(modules).forEach(async (name) => {
             if (!this.checked.includes(name)) {
                 this.bot.log.warn(`Module '${name}' not loaded.`);
             } else {
@@ -139,6 +139,10 @@ class Modules {
                 const moduleClass = require(modulePath).default; // eslint-disable-line global-require
 
                 this.modules[name] = new moduleClass(this.bot, modules[name]);
+
+                if (this.modules[name] instanceof Module) {
+                    await this.modules[name].init();
+                }
             }
         });
     }

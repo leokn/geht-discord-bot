@@ -27,6 +27,12 @@ class Module extends Events {
             value: params
         });
     }
+
+
+    /**
+     * @init
+     */
+    async init() {}
 }
 
 export default Module;

@@ -1,9 +1,9 @@
 {
     "name": "root",
-    "private": true,
     "description": "",
     "keywords": [],
     "version": "0.0.1",
+    "private": true,
     "license": "MIT",
     "homepage": "https://discord.geht.team",
     "author": {
