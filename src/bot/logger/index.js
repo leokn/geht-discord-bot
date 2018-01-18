@@ -53,6 +53,26 @@ class Logger {
 
         return this;
     }
+
+    async banner(bot) {
+        // print bot banner
+        this.print(' Discord Bot ', 'bold', 'inverse');
+        this.print(` name: ${bot.name}`);
+        this.print(` version: ${bot.version}`);
+
+        // empty line
+        this.print('');
+
+        // print environment mode
+        if (process.env.NODE_ENV === 'production') {
+            this.print(' Production mode ', 'whiteBright', 'bgGreen');
+        } else {
+            this.print(' Development mode ', 'whiteBright', 'bgRed');
+        }
+
+        // empty line
+        this.print('');
+    }
 }
 
 export default Logger;

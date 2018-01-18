@@ -16,7 +16,9 @@ class Config {
 
         // add a bot version to the config
         // TODO: add version from package.json
-        this.config.version = '0.0.1';
+        if (this.config.has('bot')) {
+            this.config.bot.version = '0.0.1';
+        }
     }
 
 

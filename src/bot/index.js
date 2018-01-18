@@ -11,7 +11,17 @@ class Bot {
      */
     constructor() {
         this.log = new Logger();
+
         this.config = new Config();
+
+        /**
+         * Bot name.
+         * @type {String}
+         * @readonly
+         */
+        Object.defineProperty(this, 'name', {
+            value: this.config.get('bot.name')
+        });
 
         /**
          * Bot version.
@@ -19,7 +29,7 @@ class Bot {
          * @readonly
          */
         Object.defineProperty(this, 'version', {
-            value: this.config.get('version')
+            value: this.config.get('bot.version')
         });
 
         // modules manager
@@ -56,16 +66,8 @@ class Bot {
      * @start
      */
     async start() {
-        // print environment mode
-        if (process.env.NODE_ENV === 'production') {
-            this.log.print(' Production mode ', 'whiteBright', 'bgGreen')
-                .print(` @version: ${this.version} `)
-                .print('');
-        } else {
-            this.log.print(' Development mode ', 'whiteBright', 'bgRed')
-                .print(` @version: ${this.version} `)
-                .print('');
-        }
+        // print bot banner
+        await this.log.banner(this);
 
         // initializing and loading...
         await this.init();
@@ -76,8 +78,6 @@ class Bot {
 
         // starting discord client
         const discord = this.modules.get('discord');
-
-        //console.log('DISCORD:', discord);
 
         await discord.start();
 
