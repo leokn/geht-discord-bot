@@ -8,10 +8,15 @@ class Config {
      * @constructor
      */
     constructor() {
+        // https://www.npmjs.com/package/config
         process.env.NODE_CONFIG_ENV = 'config';
         process.env.SUPPRESS_NO_CONFIG_WARNING = 'y';
 
         this.config = require('config'); // eslint-disable-line global-require
+
+        // add a bot version to the config
+        // TODO: add version from package.json
+        this.config.version = '0.0.1';
     }
 
 

@@ -1,5 +1,14 @@
 {
+    "name": "discord",
+    "description": "",
+    "version": "0.0.1",
+
+    "author": "",
+    "license": "MIT",
+    "homepage": "https://discord.geht.team",
+
     "main": "index.js",
+
     "dependencies": {
         "discord.js": "latest"
     }

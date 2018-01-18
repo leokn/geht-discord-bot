@@ -7,37 +7,39 @@ class Logger {
     info(msg, type) {
         const _type = type || 'info';
 
-        this.render(chalk.white(`[${_type}]`), msg);
+        return this.render(chalk.white(`[${_type}]`), msg);
     }
 
     section(msg, type) {
         const _type = type || 'info';
 
-        this.render(chalk.white(`[${_type}]`), chalk.cyan(msg));
+        return this.render(chalk.white(`[${_type}]`), chalk.cyan(msg));
     }
 
     warn(msg, type) {
         const _type = type || 'warn';
 
-        this.render(chalk.white(`[${_type}]`), chalk.yellow(msg));
+        return this.render(chalk.white(`[${_type}]`), chalk.yellow(msg));
     }
 
     error(msg, type) {
         const _type = type || 'error';
 
-        this.render(chalk.white(`[${_type}]`), chalk.red(msg));
+        return this.render(chalk.white(`[${_type}]`), chalk.red(msg));
     }
 
     success(msg, type) {
         const _type = type || 'info';
 
-        this.render(chalk.white(`[${_type}]`), chalk.green(msg));
+        return this.render(chalk.white(`[${_type}]`), chalk.green(msg));
     }
 
     render(type, msg) {
         const time = moment().format('YYYY-MM-DD HH:mm:ss');
 
         console.log(chalk.cyan(`[${time}]`), type, msg);
+
+        return this;
     }
 
     print(msg, color, background) {
@@ -48,6 +50,8 @@ class Logger {
         } else {
             console.log(chalk[color][background](msg));
         }
+
+        return this;
     }
 }
 

@@ -5,8 +5,8 @@ import bot from './bot';
 (async () => {
     try {
         await bot.start()
-            .then(status => bot.log.success(status))
-            .catch(error => bot.log.error(error));
+            .then(status => bot.log.success(status).print(''))
+            .catch(error => bot.log.error(error).print(''));
     } catch (error) {
         console.error(error);
     }

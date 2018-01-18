@@ -13,6 +13,15 @@ class Bot {
         this.log = new Logger();
         this.config = new Config();
 
+        /**
+         * Bot version.
+         * @type {String}
+         * @readonly
+         */
+        Object.defineProperty(this, 'version', {
+            value: this.config.get('version')
+        });
+
         // modules manager
         this.modules = new Modules(this);
     }
@@ -49,11 +58,13 @@ class Bot {
     async start() {
         // print environment mode
         if (process.env.NODE_ENV === 'production') {
-            this.log.print(' Production mode ', 'whiteBright', 'bgGreen');
-            this.log.print('');
+            this.log.print(' Production mode ', 'whiteBright', 'bgGreen')
+                .print(` @version: ${this.version} `)
+                .print('');
         } else {
-            this.log.print(' Development mode ', 'whiteBright', 'bgRed');
-            this.log.print('');
+            this.log.print(' Development mode ', 'whiteBright', 'bgRed')
+                .print(` @version: ${this.version} `)
+                .print('');
         }
 
         // initializing and loading...
