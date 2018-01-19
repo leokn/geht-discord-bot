@@ -5,7 +5,7 @@
 
 # GEHT Discord Bot | [![pipeline][]][commits] | [![coverage][]][commits]
 
-GEHT Discord Bot.
+GEHT Discord Bot. Based on ['discord.js'](https://discord.js.org) module.
 
 ---
 

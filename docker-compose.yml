@@ -1,0 +1,28 @@
+###############################################################################
+# $ID: docker-compose.yml, 13 Jan 2018 21:01, Leonid 'n3o' Knyazev $
+###############################################################################
+version: '2'
+
+services:
+  redis:
+    build: ./data/services/redis
+    restart: always
+
+  mariadb:
+    build: ./data/services/mariadb
+    restart: always
+    environment:
+      MYSQL_USER: geht
+      MYSQL_PASSWORD: welovegeht
+      MYSQL_DATABASE: discord
+      MYSQL_ROOT_PASSWORD: root
+
+  bot:
+    build: .
+    restart: always
+    links:
+      - redis
+      - mariadb:mysql
+    depends_on:
+      - redis
+      - mariadb
