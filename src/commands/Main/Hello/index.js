@@ -1,6 +1,8 @@
 // $ID: index.js, 23 Jan 2018, 11:05, Leonid 'n3o' Knyazev $
 
-import { Argument, Command } from '../../../../types';
+import { Command } from '../../../base';
+
+import preconditions from '../../../preconditions';
 
 class Hello extends Command {
     /**
@@ -12,15 +14,7 @@ class Hello extends Command {
             groupName: 'main',
             description: 'Hello command.',
             guildOnly: false,
-            args: [
-                new Argument({
-                    name: 'command',
-                    key: 'command',
-                    type: 'string',
-                    defaultValue: '',
-                    example: 'ping'
-                })
-            ]
+            args: []
         });
     }
 

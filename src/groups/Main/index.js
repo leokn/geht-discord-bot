@@ -1,6 +1,6 @@
 // $ID: index.js, 23 Jan 2018, 10:57, Leonid 'n3o' Knyazev $
 
-import { Group } from 'patron.js';
+import { Group } from '../../base';
 
 class Main extends Group {
     /**

@@ -1,6 +1,6 @@
 // $ID: Help.js.js, 22 Jan 2018, 21:21, Leonid 'n3o' Knyazev $
 
-import { Argument, Command } from '../../../types';
+import { Command } from '../../../base';
 
 class Help extends Command {
     /**
@@ -9,18 +9,10 @@ class Help extends Command {
     constructor() {
         super({
             names: ['help', 'commands', 'command', 'cmd', 'cmds', 'support', 'docs'],
-            groupName: 'system',
+            groupName: 'main',
             description: 'All command information.',
             guildOnly: false,
-            args: [
-                new Argument({
-                    name: 'command',
-                    key: 'command',
-                    type: 'string',
-                    defaultValue: '',
-                    example: 'ping'
-                })
-            ]
+            args: []
         });
     }
 

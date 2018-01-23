@@ -2,5 +2,10 @@
 
 import Redis from './Redis';
 import Database from './Database';
+import Discord from './Discord';
 
-export { Redis, Database };
+export default {
+    Redis,
+    Database,
+    Discord
+};

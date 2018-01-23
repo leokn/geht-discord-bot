@@ -3,4 +3,7 @@
 import Main from './Main';
 import System from './System';
 
-export default { Main, System };
+export default {
+    Main,
+    System
+};

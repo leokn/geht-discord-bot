@@ -3,9 +3,11 @@
 import Config from './Config';
 import Logger from './Logger';
 import Sender from './Sender';
+import Constants from './Constants';
 
 export {
     Config,
     Logger,
-    Sender
+    Sender,
+    Constants
 };

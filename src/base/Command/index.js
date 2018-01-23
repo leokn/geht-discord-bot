@@ -3,6 +3,12 @@
 import { Command as BaseCommand } from 'patron.js';
 
 class Command extends BaseCommand {
+    /**
+     * @register
+     */
+    register(module) {
+        this.module = module;
+    }
 }
 
 export default Command;

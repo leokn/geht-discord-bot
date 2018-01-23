@@ -1,38 +1,56 @@
 // $ID: Module.js, 22 Jan 2018, 15:10, Leonid 'n3o' Knyazev $
 
-import Events from 'events';
-
-class Module extends Events {
+class Module {
     /**
      * @constructor
      */
-    constructor(bot, params) {
-        super();
-
+    constructor() {
         /**
-         * The Bot instance.
+         * Bot instance.
          * @type {Bot}
-         * @readonly
          */
-        Object.defineProperty(this, 'bot', {
-            value: bot
-        });
+        this.bot = null;
 
         /**
-         * Module params.
-         * @type {Object}
-         * @readonly
+         * Service params.
+         * @type {object}
          */
-        Object.defineProperty(this, 'params', {
-            value: params
-        });
+        this.params = {};
     }
 
 
     /**
-     * @init
+     * @register
      */
-    async init() {}
+    async register(bot = null) {
+        if (!bot) {
+            throw new Error('You must pass the Bot instance to the service start method.');
+        }
+
+        this.bot = bot;
+
+        if (this.bot.debug) {
+            this.bot.log.info(`[bot] Registering [${this.name}] service...`);
+        }
+
+        return await this.configure();
+    }
+
+
+    /**
+     * @configure
+     */
+    async configure(params = {}) {
+        this.params = params;
+
+        return this;
+    }
+
+
+    /**
+     * @start
+     */
+    async start() {}
 }
 
 export default Module;

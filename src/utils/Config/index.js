@@ -24,7 +24,9 @@ class Config {
      * @check
      */
     async check(bot) {
-        bot.log.info('Checking configuration...');
+        if (bot.debug) {
+            bot.log.info('[bot] Checking configuration...');
+        }
 
         // check config
         if (!this.config || Object.keys(this.config).length === 0) {

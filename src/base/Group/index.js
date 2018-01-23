@@ -2,6 +2,13 @@
 
 import { Group as BaseGroup } from 'patron.js';
 
-class Group extends BaseGroup {}
+class Group extends BaseGroup {
+    /**
+     * @register
+     */
+    register(module) {
+        this.module = module;
+    }
+}
 
 export default Group;

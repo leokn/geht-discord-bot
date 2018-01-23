@@ -9,7 +9,7 @@ import Embed from './Embed';
 import Plugin from './Plugin';
 import Module  from './Module';
 import Service from './Service';
-import Registry from 'Registry';
+import Registry from './Registry';
 import Handler from './Handler';
 import Precondition from './Precondition';
 import ArgumentPrecondition from './Precondition/Argument';
