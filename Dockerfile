@@ -9,7 +9,7 @@ MAINTAINER Leonid Knyazev <leonid@knyazev.me>
 ADD package.json /tmp/package.json
 
 # Install all the dependencies with npm install
-RUN cd /tmp && npm install --silent --progress=false
+RUN cd /tmp && npm install --production --silent --progress=false
 
 # Create project directory and copy installed dependencies to this directory
 RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app

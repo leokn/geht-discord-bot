@@ -38,13 +38,17 @@
         "config": "^1",
         "moment": "^2",
         "npm": "latest",
-        "promise-mysql": "latest",
-        "discord.js": "latest"
+        "knex": "latest",
+        "mysql": "latest",
+        "bluebird": "latest",
+        "discord.js": "latest",
+        "patron.js": "latest",
+        "winston": "latest"
     },
     "devDependencies": {
         "babel-eslint": "^8",
         "babel-register": "^6",
-        "eslint": "^4",
+        "eslint": "^4.16.0",
         "eslint-plugin-babel": "^4"
     }
 }
