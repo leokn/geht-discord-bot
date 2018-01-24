@@ -1,7 +1,7 @@
 // $ID: index.js, 12 Jan 2018, 14:51, Leonid 'n3o' Knyazev $
 
-import { Client, Registry, Handler } from './base';
 import { Config, Logger } from './utils';
+import { Client, Registry, Handler } from './base';
 
 import Services from './services';
 import Modules from './modules';
@@ -136,8 +136,8 @@ class Bot extends Client {
                 module.configure().then(() => {
                     module.start();
 
-                    if (module.provides && Array.isArray(service.module)) {
-                        module.forEach(id => {
+                    if (module.provides && Array.isArray(module.provides)) {
+                        module.provides.forEach(id => {
                             if (this.modules[id]) {
                                 throw new Error(`Module [${id}] already registered. Choose another providers for [${name}] module.`);
                             }

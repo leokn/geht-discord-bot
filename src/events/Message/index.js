@@ -21,33 +21,42 @@ class MessageEvent extends Event {
     /**
      * @override
      */
-    async handler(message) {
-        if (message.author.bot === true || message.author.id === this.bot.user.id) {
-            return;
-        }
+    async handler(input) {
+        return this.filter(input)
+            .then(async (message) => {
+                // message
+                const { content: messageContent, channel: { type: channelType } } = message;
+
+                // Logging received message...
+                if (this.bot.debug) {
+                    this.messageLog(message);
+                }
+
+                // checking prefix...
+                let { prefix = '' } = this.params.commands;
+
+                // reset prefix if we receive a DM message and content not starts with prefix.
+                if (channelType === 'dm' && !messageContent.startsWith(prefix)) {
+                    prefix = '';
+                }
+
+                const result = await this.bot.handler.run(message, prefix);
+
+                return this.result(result, message);
+            })
+            .catch(error => {
+                if (this.bot.debug) {
+                    this.bot.log.info(`[message] ${error}`);
+                }
+            });
+    }
 
 
-        const inGuild = message.guild !== null;
-
-        if (this.bot.debug) {
-            let log = `[message] id: ${message.id} | author.id: ${message.author.id} | author.tag: ${message.author.tag}`;
-
-            if (inGuild) {
-                log = `${log} | guild.id: ${message.guild.id} | guild.name: ${message.guild.name}`;
-            }
-
-            log = `${log} | content: ${message.content}`;
-
-            this.bot.log.info(log); // Debug log all commands *before* execution begins.
-        }
-
-        let { commands: { prefix } } = this.params;
-
-        if (message.channel.type === 'dm' && !message.content.startsWith(prefix)) {
-            prefix = '';
-        }
-
-        const result = await this.bot.handler.run(message, prefix);
+    /**
+     * @result
+     */
+    async result(result, message) {
+        const { prefix = '' } = this.params.commands;
 
         if (result.success === false) {
             let reply;
@@ -87,9 +96,70 @@ class MessageEvent extends Event {
             this.bot.log.error(`[command] Unsuccessful command result: ${message.id} | Reason: ${result.errorReason}`);
 
             await message.reply(reply);
+        } else {
+            this.bot.log.info(`[command] Successful command result: ${result.commandName}`);
+        }
+    }
+
+
+    /**
+     * @filter
+     */
+    async filter(input) {
+        return new Promise((resolve, reject) => {
+            const { prefix = '', channels = [] } = this.params.commands;
+            const { content, author: { id: authorId, bot: authorBot }, channel: { id: channelId, type: channelType } } = input;
+
+            // [filtered]: if message author is bot-self or another bot.
+            if (authorBot === true || authorId === this.bot.user.id) {
+                return reject(`Filtered by 'self-bot' filter: ${content}`);
+            }
+
+            // [filtered]: if message not a DM and sended to a channel which not in 'commands.channels' list.
+            if (channelType !== 'dm' && channels.length && channels.indexOf(channelId) === -1) {
+                return reject(`Filtered by 'commands.channels' filter: ${content}`);
+            }
+
+            // [filtered]: if message not a DM and not starts with 'commands.prefix'
+            if (channelType !== 'dm' && prefix && !content.startsWith(prefix)) {
+                return reject(`Filtered by 'commands.prefix' filter: ${content}`);
+            }
+
+            return resolve(input);
+        });
+    }
+
+
+    /**
+     * @messageLog
+     */
+    messageLog(message) {
+        const {
+            id: messageId,
+            content: messageContent,
+            author: { id: authorId, tag: authorTag } = {},
+            channel: { id: channelId, type: channelType, name: channelName } = {}
+        } = message;
+
+        // message id
+        let log = `[message] id: ${messageId}`;
+
+        // author info
+        log = `${log} | author.id: ${authorId} | author.tag: ${authorTag}`;
+
+        // channel info
+        log = `${log} | channel.id: ${channelId} | channel.type: ${channelType} | channel.name: ${channelName}`;
+
+        // guild info
+        if (message.guild !== null) {
+            log = `${log} | guild.id: ${message.guild.id} | guild.name: ${message.guild.name}`;
         }
 
-        this.bot.log.info(`[command] Successful command result: ${message.id}`);
+        // message content
+        log = `${log} | content: ${messageContent}`;
+
+        // Debug log all commands *before* execution begins.
+        this.bot.log.info(log);
     }
 }
 
