@@ -49,20 +49,13 @@ class Service {
     /**
      * @register
      */
-    async register(bot = null) {
+    register(bot = null) {
         if (!bot) {
             throw new Error('You must pass the Bot instance to the service start method.');
         }
 
         // Bot instance.
         this.bot = bot;
-
-        // Export service provides...
-        if (this.provides && Array.isArray(this.provides)) {
-            this.provides.forEach(async (id) => {
-                this.bot.services[id] = await this.provide();
-            });
-        }
     }
 
 
@@ -75,19 +68,19 @@ class Service {
     /**
      * @start
      */
-    async start() {}
+    start() {}
 
 
     /**
      * @stop
      */
-    async stop() {}
+    stop() {}
 
 
     /**
      * @provide
      */
-    async provide() {
+    provide() {
         return this;
     }
 }

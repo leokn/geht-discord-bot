@@ -2,7 +2,7 @@
 
 import { Command } from '../../../base';
 
-class Help extends Command {
+class HelpCommand extends Command {
     /**
      * @override
      */
@@ -21,8 +21,23 @@ class Help extends Command {
      * @override
      */
     async run(msg) {
-        await msg.reply('Help command executed!');
+        let reply;
+
+        const users = await this.bot.db.select('*').from('users')
+            .catch(error => {
+                this.bot.log.error(`[sql] (${error.code}) ${error.sqlMessage}.`);
+
+                return [];
+            });
+
+        if (users.length > 0) {
+            reply = `Hello! Uers in DB: ${users.map(user => user.name)}`;
+        } else {
+            reply = 'Hello! There is no user in DB.'
+        }
+
+        return await msg.reply(reply);
     }
 }
 
-export default new Help();
+export default new HelpCommand();

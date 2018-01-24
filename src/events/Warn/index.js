@@ -3,7 +3,7 @@
 import { Event } from '../../base';
 import { Constants } from '../../utils';
 
-class Warn extends Event {
+class WarnEvent extends Event {
     /**
      * @override
      */
@@ -15,4 +15,4 @@ class Warn extends Event {
     }
 }
 
-export default new Warn();
+export default new WarnEvent();

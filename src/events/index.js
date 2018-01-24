@@ -1,17 +1,17 @@
 // $ID: index.js, 23 Jan 2018, 14:12, Leonid 'n3o' Knyazev $
 
-import Warn from './Warn';
-import Error from './Error';
-import Ready from './Ready';
-import Message from './Message';
-import Disconnect from './Disconnect';
-import Reconnect from './Reconnect';
+import WarnEvent from './Warn';
+import ErrorEvent from './Error';
+import ReadyEvent from './Ready';
+import MessageEvent from './Message';
+import DisconnectEvent from './Disconnect';
+import ReconnectEvent from './Reconnect';
 
 export default {
-    Warn,
-    Error,
-    Ready,
-    Message,
-    Disconnect,
-    Reconnect
+    WarnEvent,
+    ErrorEvent,
+    ReadyEvent,
+    MessageEvent,
+    DisconnectEvent,
+    ReconnectEvent
 };

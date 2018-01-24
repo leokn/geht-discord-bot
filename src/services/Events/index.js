@@ -27,7 +27,7 @@ class EventsService extends Service {
     /**
      * @override
      */
-    async start() {
+    start() {
         // Registering Discord Events...
         Object.keys(Events).forEach(name => Events[name].register(this.bot, this.params));
     }

@@ -10,7 +10,7 @@ class RedisService extends Service {
         super({
             name: 'Redis',
             description: 'Redis Service.',
-            provides: ['redis']
+            provides: ['cache']
         });
     }
 

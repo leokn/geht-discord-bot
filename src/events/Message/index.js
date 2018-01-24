@@ -6,7 +6,7 @@ import { Constants } from '../../utils';
 import { CommandError } from 'patron.js';
 import { DiscordAPIError } from 'discord.js';
 
-class Message extends Event {
+class MessageEvent extends Event {
     /**
      * @override
      */
@@ -30,12 +30,18 @@ class Message extends Event {
         const inGuild = message.guild !== null;
 
         if (this.bot.debug) {
-            this.bot.log.info('[message] Message Id: ' + message.id + ' | User Id: ' + message.author.id + (inGuild ? ' | Guild Id: ' + message.guild.id : '') + ' | User: ' + message.author.tag + (inGuild ? ' | Guild: ' + message.guild.name : '') + ' | Content: ' + message.content); // Debug log all commands *before* execution begins.
+            let log = `[message] id: ${message.id} | author.id: ${message.author.id} | author.tag: ${message.author.tag}`;
+
+            if (inGuild) {
+                log = `${log} | guild.id: ${message.guild.id} | guild.name: ${message.guild.name}`;
+            }
+
+            log = `${log} | content: ${message.content}`;
+
+            this.bot.log.info(log); // Debug log all commands *before* execution begins.
         }
 
-        let prefix = this.params.commands.prefix;
-
-        console.log(`STARTS WITH '${prefix}': `, message.content.startsWith(prefix));
+        let { commands: { prefix } } = this.params;
 
         if (message.channel.type === 'dm' && !message.content.startsWith(prefix)) {
             prefix = '';
@@ -47,10 +53,6 @@ class Message extends Event {
             let reply;
 
             switch (result.commandError) {
-                case CommandError.CommandNotFound:
-                    return;
-                    break;
-
                 case CommandError.Exception:
                     if (result.error.code instanceof DiscordAPIError) {
                         if (result.error.code === 400) {
@@ -58,7 +60,8 @@ class Message extends Event {
                         } else if (result.error.code === 0 || result.error.code === 404 || result.error.code === 50013) {
                             reply = 'I do not have permission to do that.';
                         } else if (result.error.code === 50007) {
-                            reply = 'I do not have permission to DM this user. Enabling the DM Privacy Settings for this server may solve this issue.';
+                            reply = 'I do not have permission to DM this user. ' +
+                                'Enabling the DM Privacy Settings for this server may solve this issue.';
                         } else if (result.error.code >= 500 && result.error.code < 600) {
                             reply = 'An error has occurred on Discord\'s part. Sorry, nothing we can do.';
                         } else {
@@ -66,12 +69,14 @@ class Message extends Event {
                         }
                     } else {
                         reply = result.errorReason;
-                         this.bot.log.error(result.error);
+                        this.bot.log.error(result.error);
                     }
                     break;
 
                 case CommandError.InvalidArgCount:
-                    reply = 'You are incorrectly using this command.\n**Usage:** `' + prefix + result.command.getUsage() + '`\n**Example:** `' + prefix + result.command.getExample() + '`';
+                    reply = 'You are incorrectly using this command.\n' +
+                        `Usage: '${prefix}${result.command.getUsage()}'\n` +
+                        `Example: '${prefix}${result.command.getExample()}'`;
                     break;
 
                 default:
@@ -79,13 +84,13 @@ class Message extends Event {
                     break;
             }
 
-            this.bot.log.error('[command] Unsuccessful command result: ' + message.id + ' | Reason: ' + result.errorReason);
+            this.bot.log.error(`[command] Unsuccessful command result: ${message.id} | Reason: ${result.errorReason}`);
 
-            return await message.reply(reply);
+            await message.reply(reply);
         }
 
-        this.bot.log.info('[command] Successful command result: ' + message.id);
+        this.bot.log.info(`[command] Successful command result: ${message.id}`);
     }
 }
 
-export default new Message();
+export default new MessageEvent();

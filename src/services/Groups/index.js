@@ -27,7 +27,7 @@ class GroupsService extends Service {
     /**
      * @override
      */
-    async start() {
+    start() {
         const groups = [];
 
         Object.keys(Groups).forEach(name => {

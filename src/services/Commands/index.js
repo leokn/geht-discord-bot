@@ -27,7 +27,7 @@ class CommandsService extends Service {
     /**
      * @override
      */
-    async start() {
+    start() {
         const commands = [];
 
         Object.keys(Commands).forEach(group => {

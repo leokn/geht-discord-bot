@@ -3,7 +3,7 @@
 import { Event } from '../../base';
 import { Constants } from '../../utils';
 
-class Disconnect extends Event {
+class DisconnectEvent extends Event {
     /**
      * @override
      */
@@ -15,4 +15,4 @@ class Disconnect extends Event {
     }
 }
 
-export default new Disconnect();
+export default new DisconnectEvent();

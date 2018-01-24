@@ -89,20 +89,38 @@ class Bot extends Client {
 
         // Loading services...
         const services = new Promise(resolve => {
-            this.log.info('[bot] Loading services...');
+            if (this.debug) {
+                this.log.info('[bot] Loading services...');
+            }
 
-            Object.keys(Services).forEach(async (name) => {
-                await Services[name].register(this);
-                await Services[name].configure();
-                await Services[name].start();
+            Object.keys(Services).forEach((name) => {
+                const service = Services[name];
 
-                return resolve();
+                service.register(this);
+
+                service.configure().then(() => {
+                    service.start();
+
+                    if (service.provides && Array.isArray(service.provides)) {
+                        service.provides.forEach(id => {
+                            if (this[id]) {
+                                throw new Error(`[${id}] already registered. Choose another provider for [${name}] service.`);
+                            }
+
+                            this[id] = service.provide();
+                        });
+                    }
+
+                    return resolve();
+                });
             });
         });
 
         // Loading modules...
         const modules = new Promise(resolve => {
-            this.log.info('[bot] Loading modules...');
+            if (this.debug) {
+                this.log.info('[bot] Loading modules...');
+            }
 
             // TODO: Implement module loader
             Object.keys(Modules).forEach(async () => {});
@@ -112,7 +130,9 @@ class Bot extends Client {
 
         // Loading plugins...
         const plugins = new Promise(resolve => {
-            this.log.info('[bot] Loading plugins...');
+            if (this.debug) {
+                this.log.info('[bot] Loading plugins...');
+            }
 
             // TODO: Implement plugin loader
             Object.keys(Plugins).forEach(async () => {});
@@ -137,9 +157,10 @@ class Bot extends Client {
 
         this.log.info('[bot] Starting...', { section: true });
 
-        await this.connect();
-
-        this.log.info('[bot] Started.', { success: true });
+        await this.connect().then(() => {
+            this.log.info('[bot] Connected.', { success: true });
+            this.log.info('[bot] Started.', { success: true });
+        });
     }
 
 
@@ -147,7 +168,7 @@ class Bot extends Client {
      * @connect
      */
     async connect() {
-        this.log.info('[bot] Connecting...');
+        this.log.info('[bot] Connecting...', { section: true });
 
         return await this.login(this.config.get('token'));
     }
@@ -157,7 +178,7 @@ class Bot extends Client {
      * @service
      */
     service(id) {
-        return this.services[id];
+        return this[id];
     }
 }
 

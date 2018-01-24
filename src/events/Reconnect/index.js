@@ -3,7 +3,7 @@
 import { Event } from '../../base';
 import { Constants } from '../../utils';
 
-class Reconnect extends Event {
+class ReconnectEvent extends Event {
     /**
      * @override
      */
@@ -15,4 +15,4 @@ class Reconnect extends Event {
     }
 }
 
-export default new Reconnect();
+export default new ReconnectEvent();
