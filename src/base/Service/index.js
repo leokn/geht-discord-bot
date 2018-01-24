@@ -6,21 +6,30 @@ class Service {
      */
     constructor(service = {}) {
         /**
-         * Service id.
-         * @type {string}
-         * @readonly
-         */
-        Object.defineProperty(this, 'id', {
-            value: service.id
-        });
-
-        /**
          * Service name.
-         * @type {string}
+         * @type {String}
          * @readonly
          */
         Object.defineProperty(this, 'name', {
             value: service.name
+        });
+
+        /**
+         * Service description.
+         * @type {String}
+         * @readonly
+         */
+        Object.defineProperty(this, 'description', {
+            value: service.description
+        });
+
+        /**
+         * Service provides.
+         * @type {Array}
+         * @readonly
+         */
+        Object.defineProperty(this, 'provides', {
+            value: service.provides
         });
 
         /**
@@ -45,30 +54,40 @@ class Service {
             throw new Error('You must pass the Bot instance to the service start method.');
         }
 
+        // Bot instance.
         this.bot = bot;
 
-        if (this.bot.debug) {
-            this.bot.log.info(`[bot] Registering [${this.name}] service...`);
+        // Export service provides...
+        if (this.provides && Array.isArray(this.provides)) {
+            this.provides.forEach(async (id) => {
+                this.bot.services[id] = await this.provide();
+            });
         }
-
-        return await this.configure();
     }
 
 
     /**
      * @configure
      */
-    async configure(params = {}) {
-        this.params = params;
-
-        return this;
-    }
+    async configure() {}
 
 
     /**
      * @start
      */
-    async start() {
+    async start() {}
+
+
+    /**
+     * @stop
+     */
+    async stop() {}
+
+
+    /**
+     * @provide
+     */
+    async provide() {
         return this;
     }
 }

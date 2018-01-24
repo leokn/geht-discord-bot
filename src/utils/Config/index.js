@@ -46,11 +46,6 @@ class Config {
         if (!this.has('token') || this.get('token') === '') {
             throw new Error('Param {bot.token} is empty. Please set {bot.token} in the config file.');
         }
-
-        // commands.prefix
-        if (!this.has('commands.prefix') || this.get('commands.prefix') === '') {
-            throw new Error('Param {commands.prefix} is empty. Please set {commands.prefix} in the config file.');
-        }
     }
 
 

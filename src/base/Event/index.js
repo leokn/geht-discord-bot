@@ -48,10 +48,6 @@ class Event {
         this.bot = bot;
         this.params = params;
 
-        if (this.bot.debug) {
-            this.bot.log.info(`[bot] Registering [${this.name}] event...`);
-        }
-
         this.types.forEach(type => {
             this.bot.on(type, this.handler.bind(this));
         });

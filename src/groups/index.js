@@ -2,5 +2,14 @@
 
 import Main from './Main';
 import System from './System';
+import Administrator from './Administrator';
+import Developer from './Developer';
+import Moderator from './Moderator';
 
-export default { Main, System };
+export default {
+    Main,
+    System,
+    Administrator,
+    Developer,
+    Moderator
+};

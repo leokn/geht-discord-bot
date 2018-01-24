@@ -2,7 +2,6 @@
 
 import { Argument as BaseArgument } from 'patron.js';
 
-class Argument extends BaseArgument {
-}
+class Argument extends BaseArgument {}
 
 export default Argument;

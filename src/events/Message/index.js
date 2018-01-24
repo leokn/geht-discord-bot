@@ -33,9 +33,11 @@ class Message extends Event {
             this.bot.log.info('[message] Message Id: ' + message.id + ' | User Id: ' + message.author.id + (inGuild ? ' | Guild Id: ' + message.guild.id : '') + ' | User: ' + message.author.tag + (inGuild ? ' | Guild: ' + message.guild.name : '') + ' | Content: ' + message.content); // Debug log all commands *before* execution begins.
         }
 
-        let prefix = this.bot.config.get('commands.prefix');
+        let prefix = this.params.commands.prefix;
 
-        if (message.channel.type === 'dm') {
+        console.log(`STARTS WITH '${prefix}': `, message.content.startsWith(prefix));
+
+        if (message.channel.type === 'dm' && !message.content.startsWith(prefix)) {
             prefix = '';
         }
 

@@ -2,14 +2,15 @@
 
 import { Service } from '../../base';
 
-class Database extends Service {
+class DatabaseService extends Service {
     /**
      * @override
      */
     constructor() {
         super({
-            id: 'db',
-            name: 'Database'
+            name: 'Database',
+            description: 'Database Service.',
+            provides: ['db']
         });
     }
 
@@ -18,10 +19,8 @@ class Database extends Service {
      * @override
      */
     async configure() {
-        await super.configure(this.bot.config.get('services.database'));
-
-        return this;
+        this.params = this.bot.config.get('database');
     }
 }
 
-export default new Database();
+export default new DatabaseService();

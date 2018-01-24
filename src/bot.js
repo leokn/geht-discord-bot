@@ -5,6 +5,7 @@ import { Config, Logger } from './utils';
 
 import Services from './services';
 import Modules from './modules';
+import Plugins from './plugins';
 
 class Bot extends Client {
     /**
@@ -87,26 +88,41 @@ class Bot extends Client {
         this.log.info('[bot] Loading...', { section: true });
 
         // Loading services...
-        Object.keys(Services).forEach(async (name) => {
-            await Services[name].register(this)
-                .then(async (service) => this.services[service.id] = await service.start());
+        const services = new Promise(resolve => {
+            this.log.info('[bot] Loading services...');
+
+            Object.keys(Services).forEach(async (name) => {
+                await Services[name].register(this);
+                await Services[name].configure();
+                await Services[name].start();
+
+                return resolve();
+            });
         });
 
         // Loading modules...
-        Object.keys(Modules).forEach(async (name) => {
-            await Modules[name].register(this)
-                .then(module => module.start());
+        const modules = new Promise(resolve => {
+            this.log.info('[bot] Loading modules...');
+
+            // TODO: Implement module loader
+            Object.keys(Modules).forEach(async () => {});
+
+            return resolve();
         });
-    }
 
+        // Loading plugins...
+        const plugins = new Promise(resolve => {
+            this.log.info('[bot] Loading plugins...');
 
-    /**
-     * @connect
-     */
-    async connect() {
-        this.log.info('[bot] Connecting...');
+            // TODO: Implement plugin loader
+            Object.keys(Plugins).forEach(async () => {});
 
-        return await this.login(this.config.get('token'));
+            return resolve();
+        });
+
+        return new Promise(resolve => {
+            Promise.all([services, modules, plugins]).then(() => resolve());
+        });
     }
 
 
@@ -124,6 +140,16 @@ class Bot extends Client {
         await this.connect();
 
         this.log.info('[bot] Started.', { success: true });
+    }
+
+
+    /**
+     * @connect
+     */
+    async connect() {
+        this.log.info('[bot] Connecting...');
+
+        return await this.login(this.config.get('token'));
     }
 
 

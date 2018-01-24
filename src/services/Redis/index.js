@@ -2,14 +2,15 @@
 
 import { Service } from '../../base';
 
-class Redis extends Service {
+class RedisService extends Service {
     /**
      * @override
      */
     constructor() {
         super({
-            id: 'redis',
-            name: 'Redis'
+            name: 'Redis',
+            description: 'Redis Service.',
+            provides: ['redis']
         });
     }
 
@@ -18,10 +19,8 @@ class Redis extends Service {
      * @override
      */
     async configure() {
-        await super.configure(this.bot.config.get('services.redis'));
-
-        return this;
+        this.params = this.bot.config.get('redis');
     }
 }
 
-export default new Redis();
+export default new RedisService();

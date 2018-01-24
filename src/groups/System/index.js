@@ -9,7 +9,7 @@ class System extends Group {
     constructor() {
         super({
             name: 'system',
-            description: 'System commands to explain stuff, etc.'
+            description: 'System bot commands.'
         });
     }
 }

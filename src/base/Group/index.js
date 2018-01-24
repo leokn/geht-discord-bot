@@ -6,8 +6,9 @@ class Group extends BaseGroup {
     /**
      * @register
      */
-    register(module) {
-        this.module = module;
+    register(bot = null, params = {}) {
+        this.bot = bot;
+        this.params = params;
     }
 }
 
