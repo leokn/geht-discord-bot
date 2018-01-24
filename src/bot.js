@@ -60,10 +60,16 @@ class Bot extends Client {
         });
 
         /**
-         * Services.
+         * Modules.
          * @type {Object}
          */
-        this.services = {};
+        this.modules = {};
+
+        /**
+         * Plugins.
+         * @type {Object}
+         */
+        this.plugins ={};
     }
 
 
@@ -93,7 +99,7 @@ class Bot extends Client {
                 this.log.info('[bot] Loading services...');
             }
 
-            Object.keys(Services).forEach((name) => {
+            Object.keys(Services).forEach(name => {
                 const service = Services[name];
 
                 service.register(this);
@@ -104,7 +110,7 @@ class Bot extends Client {
                     if (service.provides && Array.isArray(service.provides)) {
                         service.provides.forEach(id => {
                             if (this[id]) {
-                                throw new Error(`[${id}] already registered. Choose another provider for [${name}] service.`);
+                                throw new Error(`[${id}] already registered. Choose another providers for [${name}] service.`);
                             }
 
                             this[id] = service.provide();
@@ -122,8 +128,27 @@ class Bot extends Client {
                 this.log.info('[bot] Loading modules...');
             }
 
-            // TODO: Implement module loader
-            Object.keys(Modules).forEach(async () => {});
+            Object.keys(Modules).forEach(name => {
+                const module = Modules[name];
+
+                module.register(this);
+
+                module.configure().then(() => {
+                    module.start();
+
+                    if (module.provides && Array.isArray(service.module)) {
+                        module.forEach(id => {
+                            if (this.modules[id]) {
+                                throw new Error(`Module [${id}] already registered. Choose another providers for [${name}] module.`);
+                            }
+
+                            this.modules[id] = module.provide();
+                        });
+                    }
+
+                    return resolve();
+                });
+            });
 
             return resolve();
         });
@@ -179,6 +204,14 @@ class Bot extends Client {
      */
     service(id) {
         return this[id];
+    }
+
+
+    /**
+     * @module
+     */
+    module(id) {
+        return this.modules[id];
     }
 }
 
