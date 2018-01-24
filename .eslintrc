@@ -25,7 +25,7 @@
         "max-len": ["error", 140],
 
         "indent": ["error", 4, {
-            "SwitchCase": 2
+            "SwitchCase": 1
         }],
 
         "brace-style": ["error", "1tbs", {
