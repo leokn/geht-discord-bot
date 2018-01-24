@@ -4,7 +4,34 @@ class Module {
     /**
      * @constructor
      */
-    constructor() {
+    constructor(service = {}) {
+        /**
+         * Module name.
+         * @type {String}
+         * @readonly
+         */
+        Object.defineProperty(this, 'name', {
+            value: service.name
+        });
+
+        /**
+         * Module description.
+         * @type {String}
+         * @readonly
+         */
+        Object.defineProperty(this, 'description', {
+            value: service.description
+        });
+
+        /**
+         * Module provides.
+         * @type {Array}
+         * @readonly
+         */
+        Object.defineProperty(this, 'provides', {
+            value: service.provides
+        });
+
         /**
          * Bot instance.
          * @type {Bot}
@@ -22,35 +49,35 @@ class Module {
     /**
      * @register
      */
-    async register(bot = null) {
-        if (!bot) {
-            throw new Error('You must pass the Bot instance to the service start method.');
-        }
-
+    register(bot = null) {
         this.bot = bot;
-
-        if (this.bot.debug) {
-            this.bot.log.info(`[bot] Registering [${this.name}] service...`);
-        }
-
-        return await this.configure();
     }
 
 
     /**
      * @configure
      */
-    async configure(params = {}) {
-        this.params = params;
-
-        return this;
-    }
+    async configure() {}
 
 
     /**
      * @start
      */
-    async start() {}
+    start() {}
+
+
+    /**
+     * @stop
+     */
+    stop() {}
+
+
+    /**
+     * @provide
+     */
+    provide() {
+        return this;
+    }
 }
 
 export default Module;

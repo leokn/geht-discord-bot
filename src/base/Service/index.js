@@ -50,11 +50,6 @@ class Service {
      * @register
      */
     register(bot = null) {
-        if (!bot) {
-            throw new Error('You must pass the Bot instance to the service start method.');
-        }
-
-        // Bot instance.
         this.bot = bot;
     }
 
