@@ -8,11 +8,15 @@ services:
     container_name: bot-redis
     build: ./data/services/redis
     restart: always
+    ports:
+      - "6379"
 
   mariadb:
     container_name: bot-mariadb
     build: ./data/services/mariadb
     restart: always
+    ports:
+      - "3306"
     volumes:
       - ./storage/database:/var/lib/mysql
     environment:
@@ -27,7 +31,7 @@ services:
     restart: always
     links:
       - redis
-      - mariadb:mysql
+      - mariadb
     depends_on:
       - redis
       - mariadb

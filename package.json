@@ -21,13 +21,12 @@
     },
     "scripts": {
         "start": "node ./start.js",
-
-        "lint":  "eslint ./source",
+        "lint": "eslint ./source",
         "debug": "DEBUG=true node ./start.js",
         "build": "rm -rf ./build && npm run lint && babel source --out-dir build --copy-files",
-
         "docker-start": "docker-compose up -d",
-        "docker-build": "docker-compose build"
+        "docker-build": "docker-compose build",
+        "docker-stop":  "docker-compose down"
     },
     "dependencies": {
         "babel-cli": "^6",
@@ -41,13 +40,14 @@
         "chalk": "^2",
         "config": "^1",
         "moment": "^2",
-        "npm": "latest",
-        "knex": "latest",
-        "mysql": "latest",
-        "bluebird": "latest",
-        "discord.js": "latest",
-        "patron.js": "latest",
-        "winston": "latest"
+        "npm": "",
+        "knex": "^0",
+        "mysql": "^2",
+        "redis": "^2",
+        "bluebird": "^3",
+        "discord.js": "^11",
+        "patron.js": "^2",
+        "winston": "^2"
     },
     "devDependencies": {
         "babel-eslint": "^8",
