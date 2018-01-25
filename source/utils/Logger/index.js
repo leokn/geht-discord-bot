@@ -2,34 +2,85 @@
 
 import chalk from 'chalk';
 import moment from 'moment';
-import { Logger as BaseLogger, transports } from 'winston';
+import { Logger as BaseLogger, transports, config } from 'winston';
 
 class Logger extends BaseLogger {
     /**
      * @constructor
      */
     constructor() {
-        // Define transports for Logger.
-        const params = {
-            levels: {message: 10},
+        // Instantiate 'winston' Logger.
+        super();
+
+        // Debug mode?
+        const DEBUG = process.env.DEBUG === 'true';
+
+        // Configuring...
+        this.configure({
             transports: [
                 new (transports.Console)({
-                    formatter: (options) => {
-                        const time = this.getTime();
-                        const level = this.getLevel(options);
-                        const message = this.getMessage(options);
-
-                        return `${time} ${level} ${message}`;
-                    }
+                    level: DEBUG ? 'silly' : 'info',
+                    formatter: this.formatter.bind(this),
+                    rewriters: [],
+                    filters: [],
+                    handleExceptions: true,
+                    prettyPrint: true,
+                    stringify: true,
+                    colorize: true,
+                    json: false
                 })
             ]
-        };
+        });
 
-        // Instantiate 'winston' Logger.
-        super(params);
+        // Add rewriters
+        this.rewriters.push(this.rewriter.bind(this));
+
+        // Add filters
+        this.filters.push(this.filter.bind(this));
 
         // return CLI for Logger.
         return this.cli();
+    }
+
+
+    /**
+     * @formatter
+     */
+    formatter(options) {
+        const time = this.getTime();
+        const level = this.getLevel(options);
+        const message = this.getMessage(options);
+
+        return `${time} ${level} ${message}`;
+    }
+
+
+    /**
+     * @rewriter
+     */
+    rewriter(...args) {
+        const [,, meta] = [...args];
+
+        const { NODE_ENV = 'development', DEBUG = false } = process.env;
+
+        Object.assign(meta, {
+            env: NODE_ENV,
+            debug: DEBUG === 'true',
+            development: NODE_ENV !== 'production',
+            production: NODE_ENV === 'production'
+        });
+
+        return meta;
+    }
+
+
+    /**
+     * @filter
+     */
+    filter(...args) {
+        const [, msg] = [...args];
+
+        return msg;
     }
 
 
@@ -45,8 +96,7 @@ class Logger extends BaseLogger {
      * @getLevel
      */
     getLevel(options) {
-        //return config.colorize(options.level, `[${options.level.toUpperCase()}]`);
-        return `[${options.level.toUpperCase()}]`;
+        return config.colorize(options.level, `[${options.level.toUpperCase()}]`);
     }
 
 
@@ -70,22 +120,6 @@ class Logger extends BaseLogger {
         }
 
         return message;
-    }
-
-
-    /**
-     * @section
-     */
-    section(...args) {
-        return this.info(...args, { section: true });
-    }
-
-
-    /**
-     * @success
-     */
-    success(...args) {
-        return this.info(...args, { success: true });
     }
 
 

@@ -19,7 +19,7 @@
 
     "plugins": ["babel"],
 
-    "extends": ["eslint:recommended", "./config/eslint/default.js"],
+    "extends": ["eslint:recommended", "./data/config/eslint/default.js"],
 
     "rules": {
         "max-len": ["error", 140],

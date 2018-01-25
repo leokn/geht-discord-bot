@@ -1,11 +1,11 @@
 // $ID: index.js, 12 Jan 2018, 14:51, Leonid 'n3o' Knyazev $
 
-import { Config, Logger } from './utils';
+import { Logger, Config } from './utils';
 import { Client, Registry, Handler } from './base';
 
-import Services from './services';
 import Modules from './modules';
 import Plugins from './plugins';
+import Services from './services';
 
 class Bot extends Client {
     /**
@@ -13,15 +13,6 @@ class Bot extends Client {
      */
     constructor() {
         super();
-
-        /**
-         * Debug flag.
-         * @type {Boolean}
-         * @readonly
-         */
-        Object.defineProperty(this, 'debug', {
-            value: process.env.NODE_ENV !== 'production' || process.env.DEBUG === 'true'
-        });
 
         /**
          * Logger instance.
@@ -77,7 +68,7 @@ class Bot extends Client {
      * @init
      */
     async init() {
-        this.log.info('[bot] Init...', { section: true });
+        this.log.info('Init...', { section: true });
 
         // Checking configuration...
         await this.config.check(this);
@@ -91,13 +82,11 @@ class Bot extends Client {
      * @load
      */
     async load() {
-        this.log.info('[bot] Loading...', { section: true });
+        this.log.info('Loading...', { section: true });
 
         // Loading services...
         const services = new Promise(resolve => {
-            if (this.debug) {
-                this.log.info('[bot] Loading services...');
-            }
+            this.log.info('Loading services...');
 
             Object.keys(Services).forEach(name => {
                 const service = Services[name];
@@ -124,9 +113,7 @@ class Bot extends Client {
 
         // Loading modules...
         const modules = new Promise(resolve => {
-            if (this.debug) {
-                this.log.info('[bot] Loading modules...');
-            }
+            this.log.info('Loading modules...');
 
             Object.keys(Modules).forEach(name => {
                 const module = Modules[name];
@@ -155,9 +142,7 @@ class Bot extends Client {
 
         // Loading plugins...
         const plugins = new Promise(resolve => {
-            if (this.debug) {
-                this.log.info('[bot] Loading plugins...');
-            }
+            this.log.info('Loading plugins...');
 
             // TODO: Implement plugin loader
             Object.keys(Plugins).forEach(async () => {});
@@ -175,17 +160,17 @@ class Bot extends Client {
      * @start
      */
     async start() {
-        this.log.banner(this);
-
-        await this.init();
-        await this.load();
-
-        this.log.info('[bot] Starting...', { section: true });
-
-        await this.connect().then(() => {
-            this.log.info('[bot] Connected.', { success: true });
-            this.log.info('[bot] Started.', { success: true });
-        });
+        // this.log.banner(this);
+        //
+        // await this.init();
+        // await this.load();
+        //
+        // this.log.info('Starting...', { section: true });
+        //
+        // await this.connect().then(() => {
+        //     this.log.info('Connected.', { success: true });
+        //     this.log.info('Started.', { success: true });
+        // });
     }
 
 
@@ -193,7 +178,7 @@ class Bot extends Client {
      * @connect
      */
     async connect() {
-        this.log.info('[bot] Connecting...', { section: true });
+        this.log.info('Connecting...', { section: true });
 
         return await this.login(this.config.get('token'));
     }

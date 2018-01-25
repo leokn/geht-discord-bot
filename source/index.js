@@ -6,6 +6,6 @@ import bot from './bot';
     try {
         await bot.start();
     } catch (error) {
-        console.error(error);
+        bot.log.error(error.message);
     }
 })();

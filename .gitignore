@@ -16,11 +16,15 @@ package-lock.json
 .idea
 .env
 
-app
 temp
+build
 vendor
 node_modules
-config/config.js
+config/*
+!config/eslint
+!config/gitlab
+!config/config.example.js
+
 
 *.*~
 *.bak
