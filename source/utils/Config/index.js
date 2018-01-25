@@ -19,12 +19,6 @@ class Config {
         // add a bot version to the config
         // TODO: add version from package.json
         this.config.version = '0.0.1';
-
-        ///////
-        console.log('================================');
-        console.log('ENV: ', process.env.NODE_ENV);
-        console.log('TEST: ', this.config.get('env'));
-        console.log('================================');
     }
 
 

@@ -20,10 +20,10 @@ temp
 build
 vendor
 node_modules
-config/*
-!config/eslint
-!config/gitlab
-!config/config.example.js
+data/config/*
+!data/config/eslint
+!data/config/gitlab
+!data/config/config.example.js
 
 
 *.*~
