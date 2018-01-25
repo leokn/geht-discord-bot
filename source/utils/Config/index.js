@@ -9,25 +9,22 @@ class Config {
      */
     constructor() {
         // https://www.npmjs.com/package/config
+        process.env.NODE_CONFIG_ENV = 'config';
         process.env.NODE_CONFIG_DIR = './data/config';
-        process.env.NODE_CONFIG_STRICT_MODE = 'false';
+        process.env.NODE_CONFIG_STRICT_MODE = 'true';
         process.env.SUPPRESS_NO_CONFIG_WARNING = 'true';
 
-        try {
-            this.config = require('config'); // eslint-disable-line global-require
+        this.config = require('config'); // eslint-disable-line global-require
 
-            // add a bot version to the config
-            // TODO: add version from package.json
-            this.config.version = '0.0.1';
+        // add a bot version to the config
+        // TODO: add version from package.json
+        this.config.version = '0.0.1';
 
-            ///////
-            console.log('================================');
-            console.log('ENV: ', process.env.NODE_ENV);
-            console.log('TEST: ', this.config.get('env'));
-            console.log('================================');
-        } catch (error) {
-            // cached
-        }
+        ///////
+        console.log('================================');
+        console.log('ENV: ', process.env.NODE_ENV);
+        console.log('TEST: ', this.config.get('env'));
+        console.log('================================');
     }
 
 
