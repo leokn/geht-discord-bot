@@ -5,12 +5,16 @@ version: '2'
 
 services:
   redis:
+    container_name: bot-redis
     build: ./data/services/redis
     restart: always
 
   mariadb:
+    container_name: bot-mariadb
     build: ./data/services/mariadb
     restart: always
+    volumes:
+      - ./storage/database:/var/lib/mysql
     environment:
       MYSQL_USER: geht
       MYSQL_PASSWORD: welovegeht
@@ -18,6 +22,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
 
   bot:
+    container_name: bot
     build: .
     restart: always
     links:
