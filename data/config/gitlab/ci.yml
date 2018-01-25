@@ -2,13 +2,28 @@
 stages:
   - build
   - deploy
-  - production
 
 
 # build
+Build:
+  stage: build
+  image: knyazev/builder:latest
+  variables:
+    NODE_ENV: "production"
+  script:
+    - echo "Building production!"
+  only:
+    - master
 
 
 # deploy
-
-
-# production
+Deploy:
+  stage: deploy
+  image: knyazev/builder:latest
+  variables:
+    NODE_ENV: "production"
+  script:
+    - echo "Deploy production!"
+  only:
+    - master
+  when: manual
