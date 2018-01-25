@@ -13,6 +13,22 @@ class ReadyEvent extends Event {
             types: [Constants.Events.READY]
         });
     }
+
+
+    /**
+     * @override
+     */
+    async handler() {
+        const { prefix = '', status = '' } = this.params.commands;
+
+        await this.bot.user.setAFK(true);
+
+        if (status !== '') {
+            await this.bot.user.setActivity(`${prefix}${status}`, {
+                type: 'LISTENING'
+            });
+        }
+    }
 }
 
 export default new ReadyEvent();

@@ -1,6 +1,6 @@
 // $ID: index.js, 12 Jan 2018, 14:51, Leonid 'n3o' Knyazev $
 
-import { Logger, Config } from './utils';
+import { Config, Logger } from './utils';
 import { Client, Registry, Handler } from './base';
 
 import Modules from './modules';
@@ -160,17 +160,18 @@ class Bot extends Client {
      * @start
      */
     async start() {
-        // this.log.banner(this);
-        //
-        // await this.init();
-        // await this.load();
-        //
-        // this.log.info('Starting...', { section: true });
-        //
-        // await this.connect().then(() => {
-        //     this.log.info('Connected.', { success: true });
-        //     this.log.info('Started.', { success: true });
-        // });
+        this.log.banner(this);
+
+        await this.init();
+        await this.load();
+
+        this.log.info('Starting...', { section: true });
+
+        this.log.info('Connecting...');
+
+        await this.connect().then(() => {
+            this.log.info('Started.', { success: true });
+        });
     }
 
 
@@ -178,8 +179,6 @@ class Bot extends Client {
      * @connect
      */
     async connect() {
-        this.log.info('Connecting...', { section: true });
-
         return await this.login(this.config.get('token'));
     }
 
