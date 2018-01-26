@@ -9,17 +9,4 @@ process.env.SUPPRESS_NO_CONFIG_WARNING = 'true';
 
 const config = require('config');
 
-if (config.has('database')) {
-    module.exports = Object.assign({}, config.get('database'));
-} else {
-    module.exports = {};
-}
-
-
-console.log('');
-console.log('=====================================================');
-
-console.log(module.exports);
-
-console.log('=====================================================');
-console.log('');
+module.exports = Object.assign({}, config.has('database') ? config.get('database') : {});

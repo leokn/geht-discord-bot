@@ -29,6 +29,17 @@ services:
     container_name: bot
     build: .
     restart: always
+    environment:
+      BOT_ID: 396673027020029964
+      BOT_NAME: GEHT Discord Bot
+      BOT_TOKEN: Mzk2NjczMDI3MDIwMDI5OTY0.DSk2EA.Fus6uXnBBkkTyjbP1Re7IP_Okzs
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DB_CLIENT: mysql
+      DB_HOST: mariadb
+      DB_USER: geht
+      DB_PASSWORD: welovegeht
+      DB_DATABASE: discord
     links:
       - redis
       - mariadb
