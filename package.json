@@ -42,6 +42,8 @@
         "moment": "^2",
         "npm": "",
         "knex": "^0",
+        "knex-schema": "^2",
+        "knex-migrate": "^1",
         "mysql": "^2",
         "redis": "^2",
         "bluebird": "^3",

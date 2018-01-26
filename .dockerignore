@@ -1,8 +1,3 @@
-META-INF
-path.xml
-work.xml
-package-lock.json
-
 .DS_Store
 .assets
 .project
@@ -13,25 +8,16 @@ package-lock.json
 .htgroup
 .sass-cache
 .commit
+.git
 .idea
 .env
 
-temp
 build
-vendor
+temp
 node_modules
-
-data/config/*
-!data/config/eslint
-!data/config/gitlab
-!data/config/knex
-!data/config/config.example.js
 
 storage/cache/*
 storage/database/*
-!storage/cache/.gitkeep
-!storage/database/.gitkeep
-
 
 *.*~
 *.bak
