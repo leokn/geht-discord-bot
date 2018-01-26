@@ -1,0 +1,35 @@
+{
+    "id": "BOT_ID",
+    "name": "BOT_NAME",
+    "token": "BOT_TOKEN",
+    "redis": {
+        "host": "REDIS_HOST",
+        "port": "REDIS_PORT"
+    },
+    "database": {
+        "client": "DB_CLIENT",
+        "connection": {
+            "host": "DB_HOST",
+            "user": "DB_USER",
+            "password": "DB_PASSWORD",
+            "database": "DB_DATABASE"
+        },
+        "pool": {
+            "min": "DB_POLL_MIN",
+            "max": "DB_POLL_MAX"
+        },
+        "migrations": {
+            "tableName": "DB_MIGRATIONS_TABLE",
+            "directory": "DB_MIGRATIONS_DIR"
+        },
+        "seeds": {
+            "directory": "DB_SEEDS_DIR"
+        }
+    },
+    "discord": {
+        "commands": {
+            "prefix": "COMMANDS_PREFIX",
+            "status": "COMMANDS_STATUS"
+        }
+    }
+}

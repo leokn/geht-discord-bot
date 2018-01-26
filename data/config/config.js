@@ -6,13 +6,13 @@ module.exports = {
      * @type {String}
      * @required
      */
-    id: process.env.BOT_ID || '',
+    id: '',
 
     /**
      * Bot name.
      * @type {String}
      */
-    name: process.env.BOT_NAME || 'GEHT Discord Bot',
+    name: 'GEHT Discord Bot',
 
     /**
      * Bot token. Can be found in your bots application page.
@@ -20,7 +20,7 @@ module.exports = {
      * @type {String}
      * @required
      */
-    token: process.env.BOT_TOKEN || '',
+    token: '',
 
 
     /**
@@ -33,34 +33,34 @@ module.exports = {
 
     // *** Redis configuration ***
     redis: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: process.env.REDIS_PORT || '6379'
+        host: 'localhost',
+        port: '6379'
     },
 
 
     // *** Database configuration ***
     database: {
-        client: process.env.DB_CLIENT || 'mysql',
+        client: 'mysql',
 
         connection: {
-            host:     process.env.DB_HOST     || 'localhost',
-            user:     process.env.DB_USER     || 'root',
-            password: process.env.DB_PASSWORD || 'root',
-            database: process.env.DB_DATABASE || 'discord'
+            host: 'localhost',
+            user: 'root',
+            password: 'root',
+            database: 'discord'
         },
 
         pool: {
-            min: process.env.DB_POLL_MIN || 0,
-            max: process.env.DB_POLL_MAX || 5
+            min: 0,
+            max: 5
         },
 
         migrations: {
-            tableName: process.env.DB_MIGRATIONS_TABLE || 'migrations',
-            directory: process.env.DB_MIGRATIONS_DIR   || './data/database/migrations'
+            tableName: 'migrations',
+            directory: './data/database/migrations'
         },
 
         seeds: {
-            directory: process.env.DB_SEEDS_DIR || './data/database/seeds'
+            directory: './data/database/seeds'
         }
     },
 
@@ -75,14 +75,14 @@ module.exports = {
              * @type {String}
              * @required
              */
-            prefix: process.env.COMMANDS_PREFIX || '--',
+            prefix: '--',
 
             /**
              * Command name that will be showing in Bot status.
              * Prefix will be adding automatically.
              * @type {String}
              */
-            status: process.env.COMMANDS_STATUS || 'help',
+            status: 'help',
 
             /**
              * Channels IDs for commands.
