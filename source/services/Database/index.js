@@ -32,7 +32,7 @@ class DatabaseService extends Service {
         // database connections pool...
         this.database = knex({
             pool: this.params.pool,
-            client: this.params.driver,
+            client: this.params.client,
             connection: this.params.connection
         });
     }

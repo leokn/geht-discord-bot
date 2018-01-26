@@ -21,11 +21,7 @@ build
 vendor
 node_modules
 
-data/config/*
-!data/config/eslint
-!data/config/gitlab
-!data/config/knex
-!data/config/config.example.js
+data/config/local.*
 
 storage/cache/*
 storage/database/*

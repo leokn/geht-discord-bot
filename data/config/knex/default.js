@@ -1,27 +1,25 @@
 // $ID: default.js, 26 Jan 2018, 12:37, Leonid 'n3o' Knyazev $
-module.exports = {
-    development: {
-        client: 'mysql',
+'use strict';
 
-        connection: {
-            host: 'localhost',
-            user: 'root',
-            password: 'root',
-            database: 'discord'
-        },
+// https://www.npmjs.com/package/config
+process.env.NODE_CONFIG_ENV = 'config';
+process.env.NODE_CONFIG_DIR = './data/config';
+process.env.NODE_CONFIG_STRICT_MODE = 'true';
+process.env.SUPPRESS_NO_CONFIG_WARNING = 'true';
 
-        pool: {
-            min: 0,
-            max: 5
-        },
+const config = require('config');
 
-        migrations: {
-            tableName: 'migrations',
-            directory: './data/database/migrations'
-        },
+if (config.has('database')) {
+    module.exports = Object.assign({}, config.get('database'));
+} else {
+    module.exports = {};
+}
 
-        seeds: {
-            directory: './data/database/seeds'
-        }
-    }
-};
+
+console.log('');
+console.log('=====================================================');
+
+console.log(module.exports);
+
+console.log('=====================================================');
+console.log('');
