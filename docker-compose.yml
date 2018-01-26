@@ -5,15 +5,15 @@ version: '2'
 
 services:
   redis:
-    container_name: bot-redis
     build: ./data/services/redis
+    container_name: bot-redis
     restart: always
     ports:
       - "6379"
 
   mariadb:
-    container_name: bot-mariadb
     build: ./data/services/mariadb
+    container_name: bot-mariadb
     restart: always
     ports:
       - "3306"
@@ -26,8 +26,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
 
   bot:
-    container_name: bot
     build: .
+    container_name: bot
     restart: always
     environment:
       BOT_ID: 396673027020029964
