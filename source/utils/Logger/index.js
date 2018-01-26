@@ -128,6 +128,9 @@ class Logger extends BaseLogger {
      */
     banner(bot) {
         if (bot) {
+            // empty line
+            this.print('');
+
             // print bot banner
             this.print(' Discord Bot ', 'bold', 'inverse');
             this.print(` name: ${bot.config.get('name')}`);

@@ -1,10 +1,14 @@
 // $ID: Service.js, 22 Jan 2018, 15:10, Leonid 'n3o' Knyazev $
 
-class Service {
+import Events from 'events';
+
+class Service extends Events {
     /**
      * @constructor
      */
     constructor(service = {}) {
+        super();
+
         /**
          * Service name.
          * @type {String}
@@ -49,7 +53,7 @@ class Service {
     /**
      * @register
      */
-    register(bot = null) {
+    async register(bot = null) {
         this.bot = bot;
     }
 
@@ -63,13 +67,13 @@ class Service {
     /**
      * @start
      */
-    start() {}
+    async start() {}
 
 
     /**
      * @stop
      */
-    stop() {}
+    async stop() {}
 
 
     /**

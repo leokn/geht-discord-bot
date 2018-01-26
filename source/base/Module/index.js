@@ -49,8 +49,10 @@ class Module {
     /**
      * @register
      */
-    register(bot = null) {
+    async register(bot = null) {
         this.bot = bot;
+
+        return this;
     }
 
 

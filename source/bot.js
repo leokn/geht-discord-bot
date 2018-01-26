@@ -85,74 +85,45 @@ class Bot extends Client {
         this.log.info('Loading...', { section: true });
 
         // Loading services...
-        const services = new Promise(resolve => {
+        const services = await new Promise(resolve => {
             this.log.info('Loading services...');
 
-            Object.keys(Services).forEach(name => {
-                const service = Services[name];
+            Object.keys(Services).forEach(async (name) => {
+                this.log.info(`Loading [${name}] service...`);
 
-                service.register(this);
+                await Services[name].register(this);
+                await Services[name].configure();
+                await Services[name].start();
 
-                service.configure().then(() => {
-                    service.start();
+                if (Services[name].provides && Array.isArray(Services[name].provides)) {
+                    Services[name].provides.forEach(id => {
+                        if (this[id]) {
+                            throw new Error(`[${id}] already registered. Choose another provides for [${name}] service.`);
+                        }
 
-                    if (service.provides && Array.isArray(service.provides)) {
-                        service.provides.forEach(id => {
-                            if (this[id]) {
-                                throw new Error(`[${id}] already registered. Choose another providers for [${name}] service.`);
-                            }
+                        this[id] = Services[name].provide();
+                    });
+                }
 
-                            this[id] = service.provide();
-                        });
-                    }
-
-                    return resolve();
-                });
+                return resolve();
             });
         });
 
         // Loading modules...
-        const modules = new Promise(resolve => {
+        const modules = await new Promise(resolve => {
             this.log.info('Loading modules...');
-
-            Object.keys(Modules).forEach(name => {
-                const module = Modules[name];
-
-                module.register(this);
-
-                module.configure().then(() => {
-                    module.start();
-
-                    if (module.provides && Array.isArray(module.provides)) {
-                        module.provides.forEach(id => {
-                            if (this.modules[id]) {
-                                throw new Error(`Module [${id}] already registered. Choose another providers for [${name}] module.`);
-                            }
-
-                            this.modules[id] = module.provide();
-                        });
-                    }
-
-                    return resolve();
-                });
-            });
 
             return resolve();
         });
 
         // Loading plugins...
-        const plugins = new Promise(resolve => {
+        const plugins = await new Promise(resolve => {
             this.log.info('Loading plugins...');
-
-            // TODO: Implement plugin loader
-            Object.keys(Plugins).forEach(async () => {});
 
             return resolve();
         });
 
-        return new Promise(resolve => {
-            Promise.all([services, modules, plugins]).then(() => resolve());
-        });
+        await Promise.all([services, modules, plugins]);
     }
 
 
@@ -166,12 +137,8 @@ class Bot extends Client {
         await this.load();
 
         this.log.info('Starting...', { section: true });
-
-        this.log.info('Connecting...');
-
-        await this.connect().then(() => {
-            this.log.info('Started.', { success: true });
-        });
+        await this.connect();
+        this.log.info('Started.', { success: true });
     }
 
 
@@ -179,7 +146,7 @@ class Bot extends Client {
      * @connect
      */
     async connect() {
-        return await this.login(this.config.get('token'));
+        await this.login(this.config.get('token'));
     }
 
 

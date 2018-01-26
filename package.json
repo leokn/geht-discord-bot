@@ -26,7 +26,7 @@
         "build": "rm -rf ./build && npm run lint && babel source --out-dir build --copy-files",
         "docker-start": "docker-compose up -d",
         "docker-build": "docker-compose build",
-        "docker-stop":  "docker-compose down"
+        "docker-stop": "docker-compose down"
     },
     "dependencies": {
         "babel-cli": "^6",
@@ -42,7 +42,6 @@
         "moment": "^2",
         "npm": "",
         "knex": "^0",
-        "knex-migrate": "^1",
         "mysql": "^2",
         "redis": "^2",
         "bluebird": "^3",

@@ -22,18 +22,33 @@ class DatabaseService extends Service {
      */
     async configure() {
         this.params = this.bot.config.get('database');
+
+        // await migrate('up', {
+        //     cwd: './',
+        //     knexfile: './data/config/knex/default.js'
+        // }, ({ action, migration }) => {
+        //     this.bot.log.info(`Doing ${action} on ${migration}`);
+        // });
     }
 
 
     /**
      * @override
      */
-    start() {
-        // database connections pool...
+    async start() {
         this.database = knex({
             pool: this.params.pool,
             client: this.params.client,
             connection: this.params.connection
+        });
+
+        // Run migrations and seeds
+        await new Promise(resolve => {
+            this.database.migrate.latest(this.params.migrations).then(() => {
+                return this.database.seed.run(this.params.seeds);
+            }).then(() => {
+                return resolve();
+            });
         });
     }
 
