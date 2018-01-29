@@ -3,9 +3,9 @@
 import { Config, Logger } from './utils';
 import { Client, Registry, Handler } from './base';
 
+import Services from './services';
 import Modules from './modules';
 import Plugins from './plugins';
-import Services from './services';
 
 class Bot extends Client {
     /**
@@ -113,12 +113,16 @@ class Bot extends Client {
         const modules = await new Promise(resolve => {
             this.log.info('Loading modules...');
 
+            Object.keys(Modules).forEach(() => {});
+
             return resolve();
         });
 
         // Loading plugins...
         const plugins = await new Promise(resolve => {
             this.log.info('Loading plugins...');
+
+            Object.keys(Plugins).forEach(() => {});
 
             return resolve();
         });

@@ -19,8 +19,6 @@ node_modules
 storage/cache/*
 storage/database/*
 
-data/config/local.*
-
 *.*~
 *.bak
 *.old

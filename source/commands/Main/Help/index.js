@@ -21,22 +21,7 @@ class HelpCommand extends Command {
      * @override
      */
     async run(msg) {
-        let reply;
-
-        const users = await this.bot.db.select('*').from('users')
-            .catch(error => {
-                this.bot.log.error(`[sql] (${error.code}) ${error.sqlMessage}.`);
-
-                return [];
-            });
-
-        if (users.length > 0) {
-            reply = `Hello! Uers in DB: ${users.map(user => user.name)}`;
-        } else {
-            reply = 'Hello! There is no user in DB.'
-        }
-
-        return await msg.reply(reply);
+        return await msg.reply(`Hello, ${msg.author}!`);
     }
 }
 

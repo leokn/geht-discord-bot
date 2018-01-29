@@ -4,10 +4,14 @@ import Logger from './Logger';
 import Config from './Config';
 import Sender from './Sender';
 import Constants from './Constants';
+import NumberUtils from './Number';
+import StringUtils from './String';
 
 export {
     Config,
     Logger,
     Sender,
-    Constants
+    Constants,
+    NumberUtils,
+    StringUtils
 };

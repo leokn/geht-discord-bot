@@ -40,8 +40,6 @@ class RedisService extends Service {
         this.redis.on('error', (error) => {
             throw new Error(error);
         });
-
-        this.redis.quit();
     }
 
 

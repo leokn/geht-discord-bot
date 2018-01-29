@@ -1,13 +1,14 @@
 ###############################################################################
 # $ID: docker-compose.yml, 13 Jan 2018 21:01, Leonid 'n3o' Knyazev $
 ###############################################################################
-version: '2'
+version: '3'
 
 services:
   redis:
     build: ./data/services/redis
     container_name: bot-redis
     restart: always
+    env_file: .env
     ports:
       - "6379"
 
@@ -15,31 +16,22 @@ services:
     build: ./data/services/mariadb
     container_name: bot-mariadb
     restart: always
+    env_file: .env
     ports:
       - "3306"
     volumes:
       - ./storage/database:/var/lib/mysql
     environment:
-      MYSQL_USER: geht
-      MYSQL_PASSWORD: welovegeht
-      MYSQL_DATABASE: discord
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: root
 
   bot:
     build: .
     container_name: bot
     restart: always
-    environment:
-      BOT_ID: 396673027020029964
-      BOT_NAME: GEHT Discord Bot
-      BOT_TOKEN: Mzk2NjczMDI3MDIwMDI5OTY0.DSk2EA.Fus6uXnBBkkTyjbP1Re7IP_Okzs
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      DB_CLIENT: mysql
-      DB_HOST: mariadb
-      DB_USER: geht
-      DB_PASSWORD: welovegeht
-      DB_DATABASE: discord
+    env_file: .env
     links:
       - redis
       - mariadb

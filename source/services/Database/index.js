@@ -44,11 +44,9 @@ class DatabaseService extends Service {
 
         // Run migrations and seeds
         await new Promise(resolve => {
-            this.database.migrate.latest(this.params.migrations).then(() => {
-                return this.database.seed.run(this.params.seeds);
-            }).then(() => {
-                return resolve();
-            });
+            this.database.migrate.latest(this.params.migrations)
+                .then(() => this.database.seed.run(this.params.seeds))
+                .then(() => resolve());
         });
     }
 

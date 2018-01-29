@@ -89,15 +89,17 @@ class MessageEvent extends Event {
                     break;
 
                 default:
-                    reply = result.errorReason;
+                    //reply = result.errorReason;
                     break;
             }
 
             this.bot.log.error(`[command] Unsuccessful command result: ${message.id} | Reason: ${result.errorReason}`);
 
-            await message.reply(reply);
+            if (reply) {
+                await message.reply(reply);
+            }
         } else {
-            this.bot.log.info(`[command] Successful command result: ${result.commandName}`);
+            this.bot.log.info('[command] Successful command result.');
         }
     }
 
@@ -108,7 +110,12 @@ class MessageEvent extends Event {
     async filter(input) {
         return new Promise((resolve, reject) => {
             const { prefix = '', channels = [] } = this.params.commands;
-            const { content, author: { id: authorId, bot: authorBot }, channel: { id: channelId, type: channelType } } = input;
+
+            const {
+                content,
+                author: { id: authorId, bot: authorBot },
+                channel: { id: channelId, type: channelType }
+            } = input;
 
             // [filtered]: if message author is bot-self or another bot.
             if (authorBot === true || authorId === this.bot.user.id) {
@@ -116,7 +123,7 @@ class MessageEvent extends Event {
             }
 
             // [filtered]: if message not a DM and sended to a channel which not in 'commands.channels' list.
-            if (channelType !== 'dm' && channels.length && channels.indexOf(channelId) === -1) {
+            if (channelType !== 'dm' && channels.length && channels.indexOf(channelId)) {
                 return reject(`Filtered by 'commands.channels' filter: ${content}`);
             }
 
