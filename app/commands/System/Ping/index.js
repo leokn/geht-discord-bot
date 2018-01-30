@@ -1,6 +1,7 @@
 // $ID: index.js, 29 Jan 2018, 16:41, Leonid 'n3o' Knyazev $
 
-import { Command } from '../../../base';
+import { Command, Embed } from '../../../base';
+import { Constants } from '../../../utils';
 
 class PingCommand extends Command {
     /**
@@ -11,8 +12,7 @@ class PingCommand extends Command {
             names: ['ping'],
             groupName: 'system',
             description: 'Pings the bot.',
-            guildOnly: false,
-            hasCooldown: true
+            guildOnly: false
         });
     }
 
@@ -36,14 +36,25 @@ class PingCommand extends Command {
     }
 
 
+    /**
+     * @troll
+     */
     async troll(msg) {
         return await msg.reply('Stop trolling me.');
     }
 
 
+    /**
+     * @ping
+     */
     async ping(msg) {
         const startDate = Date.now();
-        const response = await msg.reply('ℹ Ping');
+        const response = await msg.channel.send({
+            embed: new Embed({
+                title: ':information_source: Ping',
+                color: Constants.Colors.BLUE
+            })
+        });
         const receivedTime = Date.now();
 
         const ping = Math.max(0, (response.createdAt.getTime() - startDate));
@@ -51,15 +62,18 @@ class PingCommand extends Command {
         const delayStr = delay >= 0 ? `+${delay}` : `${delay}`;
 
         this.play(response, 500, [
-            'ℹ __**P**__ing',
-            'ℹ __**Pi**__ng',
-            'ℹ __**Pin**__g',
-            'ℹ __**Ping**__',
-            `ℹ **Pong** - \`${ping}ms\` (\`${delayStr}ms\`)`
+            ':information_source: __**P**__ing',
+            ':information_source: __**Pi**__ng',
+            ':information_source: __**Pin**__g',
+            ':information_source: __**Ping**__',
+            `:information_source: **Pong** - \`${ping}ms\` (\`${delayStr}ms\`)`
         ]);
     }
 
 
+    /**
+     * @play
+     */
     play(msg, delay, list) {
         if (list.length < 1) {
             return;
@@ -68,7 +82,12 @@ class PingCommand extends Command {
         let next = list.shift();
         let start = this.now();
 
-        msg.edit(next).then(() => {
+        msg.edit({
+            embed: new Embed({
+                title: next,
+                color: Constants.Colors.BLUE
+            })
+        }).then(() => {
             let elapsed = this.now() - start;
 
             setTimeout(() => {
@@ -78,6 +97,9 @@ class PingCommand extends Command {
     }
 
 
+    /**
+     * @now
+     */
     now() {
         const now = process.hrtime();
 

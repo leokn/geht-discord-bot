@@ -6,20 +6,10 @@ class Owner extends Precondition {
     /**
      * @override
      */
-    constructor() {
-        super({
-            name: 'bot.owner'
-        });
-    }
+    async run(command, msg) {
+        const owners = command.bot.config.get('owners');
 
-
-    /**
-     * @override
-     */
-    async run(command, message) {
-        const owners = command.module.bot.config.get('owners');
-
-        if (Array.isArray(owners) && owners.length > 0 && owners.indexOf(message.author.id) === -1) {
+        if (!Array.isArray(owners) || owners.indexOf(msg.author.id) === -1) {
             return PreconditionResult.fromError(command, 'You must be a bot owner in order to use this command.');
         }
 

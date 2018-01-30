@@ -7,6 +7,14 @@ class StringUtils {
     static upperFirstChar(input) {
         return input.charAt(0).toUpperCase() + input.slice(1);
     }
+
+
+    /**
+     * @isNullOrWhiteSpace
+     */
+    static isNullOrWhiteSpace(input) {
+        return !input || input.replace(/\s/g, '').length === 0;
+    }
 }
 
 export default StringUtils;

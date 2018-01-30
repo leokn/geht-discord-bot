@@ -7,6 +7,8 @@ import Services from './services';
 import Modules from './modules';
 import Plugins from './plugins';
 
+import preconditions from './preconditions';
+
 class Bot extends Client {
     /**
      * @constructor

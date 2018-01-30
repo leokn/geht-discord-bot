@@ -8,7 +8,7 @@ class HelpCommand extends Command {
      */
     constructor() {
         super({
-            names: ['help', 'commands', 'command', 'cmd', 'cmds', 'support', 'docs'],
+            names: ['help', 'commands', 'cmds'],
             groupName: 'main',
             description: 'All command information.',
             guildOnly: false,

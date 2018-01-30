@@ -6,11 +6,20 @@ class NumberUtils {
      */
     static msToTime(input) {
         return {
-            milliseconds: parseInt((input % 1000) / 100, 10),
-            seconds: parseInt((input / 1000) % 60, 10),
+            days: parseInt(input / (1000 * 60 * 60 * 24)),
+            hours: parseInt(input / (1000 * 60 * 60), 10),
             minutes: parseInt((input / (1000 * 60)) % 60, 10),
-            hours: parseInt(input / (1000 * 60 * 60), 10)
+            seconds: parseInt((input / 1000) % 60, 10),
+            milliseconds: parseInt((input % 1000) / 100, 10)
         }
+    }
+
+
+    /**
+     * @isEven
+     */
+    static isEven(input) {
+        return input % 2 === 0;
     }
 }
 
