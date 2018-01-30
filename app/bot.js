@@ -89,19 +89,21 @@ class Bot extends Client {
             this.log.info('Loading services...');
 
             Object.keys(Services).forEach(async (name) => {
-                this.log.info(`Loading [${name}] service...`);
+                const service = Services[name];
 
-                await Services[name].register(this);
-                await Services[name].configure();
-                await Services[name].start();
+                this.log.info(`Loading [${service.name}] service...`);
 
-                if (Services[name].provides && Array.isArray(Services[name].provides)) {
-                    Services[name].provides.forEach(id => {
+                await service.register(this);
+                await service.configure();
+                await service.start();
+
+                if (service.provides && Array.isArray(service.provides)) {
+                    service.provides.forEach(id => {
                         if (this[id]) {
-                            throw new Error(`[${id}] already registered. Choose another provides for [${name}] service.`);
+                            throw new Error(`[${id}] already registered. Choose another provides for [${service.name}] service.`);
                         }
 
-                        this[id] = Services[name].provide();
+                        this[id] = service.provide();
                     });
                 }
 
@@ -113,9 +115,19 @@ class Bot extends Client {
         const modules = await new Promise(resolve => {
             this.log.info('Loading modules...');
 
-            Object.keys(Modules).forEach(() => {});
+            Object.keys(Modules).forEach(async (name) => {
+                const module = Modules[name];
 
-            return resolve();
+                this.log.info(`Loading [${module.name}] module...`);
+
+                await module.register(this);
+                await module.configure();
+                await module.start();
+
+                this.modules[module.name] = module.provide();
+
+                return resolve();
+            });
         });
 
         // Loading plugins...

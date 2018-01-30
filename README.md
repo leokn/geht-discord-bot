@@ -25,6 +25,8 @@ DB_PASSWORD=
 DB_DATABASE=
 ```
 
+This params will be used `docker-compose` to build container with MariaDB service, and then this params will be used in `application` for connection to MariaDB.
+
 ---
 
 

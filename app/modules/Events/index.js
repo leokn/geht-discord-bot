@@ -1,16 +1,16 @@
 // $ID: index.js, 23 Jan 2018, 13:32, Leonid 'n3o' Knyazev $
 
-import { Service } from '../../base';
+import { Module } from '../../base';
 
 import Events from '../../events';
 
-class EventsService extends Service {
+class EventsService extends Module {
     /**
      * @override
      */
     constructor() {
         super({
-            name: 'Events',
+            name: 'events',
             description: 'Discord Events Service.'
         });
     }

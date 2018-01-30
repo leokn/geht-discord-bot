@@ -1,16 +1,16 @@
 // $ID: index.js, 24 Jan 2018, 14:20, Leonid 'n3o' Knyazev $
 
-import { Service } from '../../base';
+import { Module } from '../../base';
 
 import Groups from '../../groups';
 
-class GroupsService extends Service {
+class GroupsService extends Module {
     /**
      * @override
      */
     constructor() {
         super({
-            name: 'Groups',
+            name: 'groups',
             description: 'Groups Service.'
         });
     }

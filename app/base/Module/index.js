@@ -1,10 +1,14 @@
 // $ID: Module.js, 22 Jan 2018, 15:10, Leonid 'n3o' Knyazev $
 
-class Module {
+import Events from 'events';
+
+class Module extends Events {
     /**
      * @constructor
      */
     constructor(service = {}) {
+        super();
+
         /**
          * Module name.
          * @type {String}
@@ -21,15 +25,6 @@ class Module {
          */
         Object.defineProperty(this, 'description', {
             value: service.description
-        });
-
-        /**
-         * Module provides.
-         * @type {Array}
-         * @readonly
-         */
-        Object.defineProperty(this, 'provides', {
-            value: service.provides
         });
 
         /**
@@ -51,8 +46,6 @@ class Module {
      */
     async register(bot = null) {
         this.bot = bot;
-
-        return this;
     }
 
 
@@ -65,13 +58,7 @@ class Module {
     /**
      * @start
      */
-    start() {}
-
-
-    /**
-     * @stop
-     */
-    stop() {}
+    async start() {}
 
 
     /**
