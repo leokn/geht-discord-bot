@@ -6,10 +6,9 @@ FROM node:latest
 MAINTAINER Leonid Knyazev <leonid@knyazev.me>
 
 # Copy the package.json file alone in a single instruction into a temporary folder
-ADD package.json /tmp/package.json
-
 # Install all the dependencies with npm install
-RUN cd /tmp && npm install --production --silent --progress=false
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install --silent --progress=false
 
 # Create project directory and copy installed dependencies to this directory
 RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app
@@ -18,13 +17,7 @@ RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app
 WORKDIR /opt/app
 
 # Copy our app to the working directory
-ADD . /opt/app
-
-# Build our app
-RUN npm run build
-
-# Creates a mount point
-VOLUME [ "/opt/app" ]
+# ADD . /opt/app
 
 # Start app
-CMD ["npm", "start"]
+CMD ["npm", "run", "debug"]

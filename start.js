@@ -10,5 +10,5 @@ if (ENVIRONMENT === 'production') {
     require('./build');
 } else {
     require('babel-register');
-    require('./source');
+    require('./app');
 }

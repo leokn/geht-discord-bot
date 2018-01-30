@@ -27,7 +27,7 @@ class PingCommand extends Command {
         if (count === null) {
             await this.bot.cache.setAsync(key, 1, 'EX', 25);
             await this.ping(msg);
-        } else if (parseInt(count) <= 3) {
+        } else if (parseInt(count, 10) <= 3) {
             await this.bot.cache.incrAsync(key);
             await this.ping(msg);
         } else {
@@ -72,15 +72,19 @@ class PingCommand extends Command {
             let elapsed = this.now() - start;
 
             setTimeout(() => {
-                 this.play(msg, delay, list);
+                this.play(msg, delay, list);
             }, Math.max(50, delay - elapsed));
         });
     }
 
 
     now() {
-        let now = process.hrtime();
-        return now[0] * 1e3 + now[1] / 1e6;
+        const now = process.hrtime();
+
+        const seconds = now[0] * 1e3;
+        const nanoseconds = now[1] / 1e6
+
+        return seconds + nanoseconds;
     }
 }
 

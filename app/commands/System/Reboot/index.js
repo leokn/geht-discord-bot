@@ -23,12 +23,17 @@ class RebootCommand extends Command {
      * @override
      */
     async run(msg) {
-        const embed = new Embed({
-            title: ':warning: Rebooting...',
-            color: Constants.Colors.RED
-        });
+        return await msg.channel.send({
+            embed: new Embed({
+                title: ':warning: Rebooting...',
+                description: 'Wait a notification about Reboot status.',
+                color: Constants.Colors.RED
+            })
+        }).then(async () => {
+            await this.bot.cache.setAsync('reboot', msg.author.id);
 
-        return await msg.channel.send({ embed: embed });
+            return process.exit(0);
+        });
     }
 }
 

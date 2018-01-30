@@ -10,9 +10,7 @@
 .commit
 .git
 .idea
-.env
 
-build
 temp
 node_modules
 

@@ -6,7 +6,6 @@ version: '3'
 services:
   redis:
     build: ./data/services/redis
-    container_name: bot-redis
     restart: always
     env_file: .env
     ports:
@@ -14,7 +13,6 @@ services:
 
   mariadb:
     build: ./data/services/mariadb
-    container_name: bot-mariadb
     restart: always
     env_file: .env
     ports:
@@ -27,11 +25,12 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: root
 
-  bot:
+  app:
     build: .
-    container_name: bot
     restart: always
     env_file: .env
+    volumes:
+      - .:/opt/app
     links:
       - redis
       - mariadb
