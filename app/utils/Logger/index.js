@@ -2,6 +2,7 @@
 
 import chalk from 'chalk';
 import moment from 'moment';
+
 import { Logger as BaseLogger, transports, config } from 'winston';
 
 class Logger extends BaseLogger {
@@ -15,28 +16,62 @@ class Logger extends BaseLogger {
         // Debug mode?
         const DEBUG = process.env.DEBUG === 'true';
 
+        // Config object.
+        const CONFIG = {
+            transports: []
+        };
+
+        // Add 'cli' console transport...
+        CONFIG.transports.push(new (transports.Console)({
+            name: 'cli',
+            level: DEBUG ? 'silly' : 'info',
+            formatter: this.formatter.bind(this),
+            rewriters: [this.rewriter.bind(this)],
+            filters: [this.filter.bind(this)],
+            handleExceptions: true,
+            prettyPrint: true,
+            stringify: true,
+            colorize: true,
+            json: false
+        }));
+
+        // Add 'info' file transports...
+        CONFIG.transports.push(new (transports.File)({
+            name: 'info',
+            level: 'info',
+            filename: './storage/logs/info.log',
+            prettyPrint: false,
+            stringify: false,
+            colorize: false,
+            json: false
+        }));
+
+        // Add 'error' file transport...
+        CONFIG.transports.push(new (transports.File)({
+            name: 'error',
+            level: 'error',
+            filename: './storage/logs/error.log',
+            prettyPrint: false,
+            stringify: false,
+            colorize: false,
+            json: false
+        }));
+
+        // Add 'debug' file transport...
+        if (DEBUG) {
+            CONFIG.transports.push(new (transports.File)({
+                name: 'debug',
+                level: 'silly',
+                filename: './storage/logs/debug.log',
+                prettyPrint: false,
+                stringify: false,
+                colorize: false,
+                json: false
+            }));
+        }
+
         // Configuring...
-        this.configure({
-            transports: [
-                new (transports.Console)({
-                    level: DEBUG ? 'silly' : 'info',
-                    formatter: this.formatter.bind(this),
-                    rewriters: [],
-                    filters: [],
-                    handleExceptions: true,
-                    prettyPrint: true,
-                    stringify: true,
-                    colorize: true,
-                    json: false
-                })
-            ]
-        });
-
-        // Add rewriters
-        this.rewriters.push(this.rewriter.bind(this));
-
-        // Add filters
-        this.filters.push(this.filter.bind(this));
+        this.configure(CONFIG);
 
         // return CLI for Logger.
         return this.cli();
