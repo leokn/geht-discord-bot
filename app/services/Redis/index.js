@@ -21,8 +21,12 @@ class RedisService extends Service {
     /**
      * @override
      */
-    async configure() {
-        this.params = this.bot.config.get('redis');
+    async configure(params = {}) {
+        if (this.config.has('redis')) {
+            Object.assign(params, this.bot.config.get('redis'));
+        }
+
+        Object.assign(this.params, params);
 
         // Promisifying redis...
         bluebird.promisifyAll(redis.RedisClient.prototype);
@@ -34,12 +38,10 @@ class RedisService extends Service {
      * @override
      */
     async start() {
-        // database connections pool...
+        // Redis client.
         this.redis = redis.createClient(this.params.port, this.params.host);
 
-        this.redis.on('error', (error) => {
-            throw new Error(error);
-        });
+        this.redis.on('error', error => this.log.error(error));
     }
 
 

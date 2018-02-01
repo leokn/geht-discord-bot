@@ -37,13 +37,7 @@ class Service extends Events {
         });
 
         /**
-         * Bot instance.
-         * @type {Bot}
-         */
-        this.bot = null;
-
-        /**
-         * Service params.
+         * Params.
          * @type {object}
          */
         this.params = {};
@@ -53,8 +47,25 @@ class Service extends Events {
     /**
      * @register
      */
-    async register(bot = null) {
-        this.bot = bot;
+    async register(log = null, config = null, bot = null) {
+        // Register Logger instance.
+        Object.assign(this, 'log', {
+            value: log
+        });
+
+        // Register Config instance.
+        Object.assign(this, 'config', {
+            value: config
+        });
+
+        // Register Bot instance.
+        Object.assign(this, 'bot', {
+            value: bot
+        });
+
+        if (this.log !== null) {
+            this.log.info(`Loading [${this.name}] service...`);
+        }
     }
 
 

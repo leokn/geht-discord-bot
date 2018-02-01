@@ -20,15 +20,12 @@ class DatabaseService extends Service {
     /**
      * @override
      */
-    async configure() {
-        this.params = this.bot.config.get('database');
+    async configure(params = {}) {
+        if (this.config.has('database')) {
+            Object.assign(params, this.bot.config.get('database'));
+        }
 
-        // await migrate('up', {
-        //     cwd: './',
-        //     knexfile: './data/config/knex/default.js'
-        // }, ({ action, migration }) => {
-        //     this.bot.log.info(`Doing ${action} on ${migration}`);
-        // });
+        Object.assign(this.params, params);
     }
 
 
@@ -36,6 +33,7 @@ class DatabaseService extends Service {
      * @override
      */
     async start() {
+        // Database connections pool.
         this.database = knex({
             pool: this.params.pool,
             client: this.params.client,
