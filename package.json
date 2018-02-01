@@ -20,20 +20,19 @@
         "url": "git@git.knyazev.me:geht/discord.git"
     },
     "scripts": {
-        "lint":  "eslint app",
+        "lint": "eslint app",
         "start": "node start.js",
         "debug": "DEBUG=true node start.js",
         "build": "rm -rf ./build && npm run lint && babel app --out-dir build --copy-files"
     },
     "dependencies": {
+        "axios": "^0",
         "babel-cli": "^6",
         "babel-core": "^6",
-        "babel-plugin-transform-object-assign": "^6",
-        "babel-plugin-transform-object-rest-spread": "^6",
-        "babel-plugin-transform-runtime": "^6",
         "babel-polyfill": "^6",
-        "babel-preset-env": "^1",
+        "babel-register": "^6",
         "babel-runtime": "^6",
+        "babel-preset-env": "^1",
         "chalk": "^2",
         "config": "^1",
         "moment": "^2",
@@ -48,7 +47,6 @@
     },
     "devDependencies": {
         "babel-eslint": "^8",
-        "babel-register": "^6",
         "eslint": "^4.16.0",
         "eslint-plugin-babel": "^4"
     }

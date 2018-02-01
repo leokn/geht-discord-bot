@@ -67,37 +67,40 @@ module.exports = {
 
     // *** Discord configuration ***
     discord: {
-        // Commands params.
-        commands: {
-            /**
-             * Prefix for commands.
-             * Bot will be parse commands only with this prefix.
-             * @type {String}
-             * @required
-             */
-            prefix: '--',
-
-            /**
-             * Command name that will be showing in Bot status.
-             * Prefix will be adding automatically.
-             * @type {String}
-             */
-            status: 'help',
-
-            /**
-             * Channels IDs for commands.
-             * Array with channels IDs where bot will be parse commands.
-             * If empty, then bot will be parse commands in all channels on the server.
-             * This option ignored with "direct" and "mentioned" messages.
-             */
-            channels: []
-        },
-
         // Reconnection params.
         reconnect: {
             auto: true, // enable/disable auto reconnect
             timeout: 10 // timeout before auto reconnect (in seconds)
         }
+    },
+
+
+    /**
+     * Commands configurations.
+     */
+    commands: {
+        /**
+         * Prefix for commands.
+         * Bot will be parse commands only with this prefix.
+         * @type {String}
+         * @required
+         */
+        prefix: '--',
+
+        /**
+         * Command name that will be showing in Bot status.
+         * Prefix will be adding automatically.
+         * @type {String}
+         */
+        status: 'help',
+
+        /**
+         * Channels IDs for commands.
+         * Array with channels IDs where bot will be parse commands.
+         * If empty, then bot will be parse commands in all channels on the server.
+         * This option ignored with "direct" and "mentioned" messages.
+         */
+        channels: []
     },
 
 

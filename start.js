@@ -6,9 +6,11 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === '') {
     process.env.NODE_ENV = ENVIRONMENT;
 }
 
-if (ENVIRONMENT === 'production') {
-    require('./build');
-} else {
+if (ENVIRONMENT !== 'production') {
     require('babel-register');
+    require('babel-polyfill');
+
     require('./app');
+} else {
+    require('./build');
 }

@@ -4,7 +4,7 @@ import { Module } from '../../base';
 
 import Commands from '../../commands';
 
-class CommandsService extends Module {
+class CommandsModule extends Module {
     /**
      * @override
      */
@@ -13,14 +13,23 @@ class CommandsService extends Module {
             name: 'commands',
             description: 'Commands Service.'
         });
+
+        /**
+         * @type {Object}
+         */
+        this.params = {};
     }
 
 
     /**
      * @override
      */
-    async configure() {
-        this.params = this.bot.config.get('discord');
+    async configure(params = {}) {
+        if (this.bot.config.has('commands')) {
+            Object.assign(params, this.bot.config.get('commands'));
+        }
+
+        Object.assign(this.params, params);
     }
 
 
@@ -32,7 +41,6 @@ class CommandsService extends Module {
 
         Object.keys(Commands).forEach(group => {
             Object.keys(Commands[group]).forEach(command => {
-                // Register module in the command.
                 Commands[group][command].register(this.bot, this.params);
 
                 commands.push(Commands[group][command]);
@@ -43,4 +51,4 @@ class CommandsService extends Module {
     }
 }
 
-export default new CommandsService();
+export default new CommandsModule();

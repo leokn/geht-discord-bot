@@ -7,9 +7,5 @@ import Developer from './Developer';
 import Moderator from './Moderator';
 
 export default {
-    Main,
-    System,
-    Administrator,
-    Developer,
-    Moderator
+    Main
 };

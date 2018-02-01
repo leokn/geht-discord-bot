@@ -33,7 +33,7 @@ class MessageEvent extends Event {
                 }
 
                 // checking prefix...
-                let { prefix = '' } = this.params.commands;
+                let { prefix = '' } = this.params;
 
                 // reset prefix if we receive a DM message and content not starts with prefix.
                 if (channelType === 'dm' && !messageContent.startsWith(prefix)) {
@@ -56,7 +56,7 @@ class MessageEvent extends Event {
      * @result
      */
     async result(result, message) {
-        const { prefix = '' } = this.params.commands;
+        const { prefix = '' } = this.params;
 
         if (result.success === false) {
             let reply;
@@ -109,7 +109,7 @@ class MessageEvent extends Event {
      */
     async filter(input) {
         return new Promise((resolve, reject) => {
-            const { prefix = '', channels = [] } = this.params.commands;
+            const { prefix = '', channels = [] } = this.params;
 
             const {
                 content,

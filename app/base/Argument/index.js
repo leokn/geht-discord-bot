@@ -2,6 +2,13 @@
 
 import { Argument as BaseArgument } from 'patron.js';
 
-class Argument extends BaseArgument {}
+class Argument extends BaseArgument {
+    /**
+     * @override
+     */
+    constructor(options = {}) {
+        super(options);
+    }
+}
 
 export default Argument;

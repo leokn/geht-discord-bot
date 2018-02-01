@@ -8,7 +8,9 @@ class Messenger {
      * @send
      */
     static send(channel, content) {
-        return channel.send({ embed: this.embed(content) }).catch(() => null);
+        const embed = this.embed(content);
+
+        return channel.send({ embed }).catch(() => null);
     }
 
 

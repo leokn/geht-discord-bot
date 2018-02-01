@@ -1,4 +1,4 @@
-// $ID: index.js, 23 Jan 2018, 12:18, Leonid 'n3o' Knyazev $
+// $ID: index.js, 01 Feb 2018, 13:50, Leonid 'n3o' Knyazev $
 
 import { ArgumentPrecondition as BaseArgumentPrecondition } from 'patron.js';
 

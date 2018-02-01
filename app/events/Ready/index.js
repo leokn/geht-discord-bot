@@ -19,7 +19,7 @@ class ReadyEvent extends Event {
      * @override
      */
     async handler() {
-        const { prefix = '', status = '' } = this.params.commands;
+        const { prefix = '', status = '' } = this.params;
 
         await this.bot.user.setAFK(true);
 

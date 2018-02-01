@@ -4,7 +4,7 @@ import { Module } from '../../base';
 
 import Events from '../../events';
 
-class EventsService extends Module {
+class EventsModule extends Module {
     /**
      * @override
      */
@@ -19,8 +19,16 @@ class EventsService extends Module {
     /**
      * @override
      */
-    async configure() {
-        this.params = this.bot.config.get('discord');
+    async configure(params = {}) {
+        if (this.bot.config.has('discord')) {
+            Object.assign(params, this.bot.config.get('discord'));
+        }
+
+        if (this.bot.config.has('commands')) {
+            Object.assign(params, this.bot.config.get('commands'));
+        }
+
+        Object.assign(this.params, params);
     }
 
 
@@ -33,4 +41,4 @@ class EventsService extends Module {
     }
 }
 
-export default new EventsService();
+export default new EventsModule();

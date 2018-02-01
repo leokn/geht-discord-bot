@@ -4,11 +4,26 @@ import { Command as BaseCommand } from 'patron.js';
 
 class Command extends BaseCommand {
     /**
+     * @override
+     */
+    constructor(options = {}) {
+        super(options);
+
+        /**
+         * @type {Object}
+         */
+        this.params = {};
+    }
+
+
+    /**
      * @register
      */
     register(bot = null, params = {}) {
         this.bot = bot;
-        this.params = params;
+
+        Object.assign(params, this.params);
+        Object.assign(this.params, params);
     }
 }
 

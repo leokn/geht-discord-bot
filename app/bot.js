@@ -3,11 +3,9 @@
 import { Config, Logger } from './utils';
 import { Client, Registry, Handler } from './base';
 
-import Services from './services';
 import Modules from './modules';
 import Plugins from './plugins';
-
-import preconditions from './preconditions';
+import Services from './services';
 
 class Bot extends Client {
     /**

@@ -46,7 +46,9 @@ class Event {
         }
 
         this.bot = bot;
-        this.params = params;
+
+        Object.assign(params, this.params);
+        Object.assign(this.params, params);
 
         this.types.forEach(type => {
             this.bot.on(type, this.handler.bind(this));
