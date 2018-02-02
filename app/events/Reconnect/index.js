@@ -4,9 +4,6 @@ import { Event } from '../../base';
 import { Constants } from '../../utils';
 
 class ReconnectEvent extends Event {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'reconnect',

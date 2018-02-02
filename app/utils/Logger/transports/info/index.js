@@ -1,13 +1,9 @@
 // $ID: index.js, 02 Feb 2018, 13:13, Leonid 'n3o' Knyazev $
 
 import { transports } from 'winston';
-
 import 'winston-daily-rotate-file';
 
 class InfoFile extends transports.DailyRotateFile {
-    /**
-     * @override
-     */
     constructor() {
         // DEBUG mode?
         const DEBUG = process.env.NODE_ENV !== 'production' || process.env.DEBUG === 'true';

@@ -3,9 +3,6 @@
 import { Group } from '../../base';
 
 class Administrator extends Group {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'administrator',

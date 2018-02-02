@@ -4,9 +4,6 @@ import { Event } from '../../base';
 import { Constants } from '../../utils';
 
 class DisconnectEvent extends Event {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'disconnect',

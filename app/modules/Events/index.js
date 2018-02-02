@@ -1,13 +1,9 @@
 // $ID: index.js, 23 Jan 2018, 13:32, Leonid 'n3o' Knyazev $
 
 import { Module } from '../../base';
-
 import Events from '../../events';
 
 class EventsModule extends Module {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'events',
@@ -15,10 +11,6 @@ class EventsModule extends Module {
         });
     }
 
-
-    /**
-     * @override
-     */
     async configure(params = {}) {
         if (this.config.has('discord')) {
             Object.assign(params, this.config.get('discord'));
@@ -31,10 +23,6 @@ class EventsModule extends Module {
         await super.configure(params);
     }
 
-
-    /**
-     * @override
-     */
     async start() {
         // Registering Discord Events...
         Object.keys(Events).forEach(name => Events[name].register(this.bot, this.log, this.config, this.params));

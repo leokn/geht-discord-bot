@@ -3,9 +3,6 @@
 import { Command as BaseCommand } from 'patron.js';
 
 class Command extends BaseCommand {
-    /**
-     * @override
-     */
     constructor(options = {}) {
         super(options);
 
@@ -15,10 +12,6 @@ class Command extends BaseCommand {
         this.params = {};
     }
 
-
-    /**
-     * @register
-     */
     register(bot = null, log = null, config = null, params = {}) {
         // Register Bot instance.
         Object.defineProperty(this, 'bot', {

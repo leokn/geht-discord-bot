@@ -3,9 +3,6 @@
 import { Group } from '../../base';
 
 class Developer extends Group {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'developer',

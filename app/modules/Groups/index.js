@@ -1,13 +1,9 @@
 // $ID: index.js, 24 Jan 2018, 14:20, Leonid 'n3o' Knyazev $
 
 import { Module } from '../../base';
-
 import Groups from '../../groups';
 
 class GroupsService extends Module {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'groups',
@@ -15,10 +11,6 @@ class GroupsService extends Module {
         });
     }
 
-
-    /**
-     * @override
-     */
     async configure(params = {}) {
         if (this.config.has('discord')) {
             Object.assign(params, this.config.get('discord'));
@@ -31,10 +23,6 @@ class GroupsService extends Module {
         await super.configure(params);
     }
 
-
-    /**
-     * @override
-     */
     async start() {
         const groups = [];
 

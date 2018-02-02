@@ -1,13 +1,9 @@
 // $ID: index.js, 22 Jan 2018, 20:05, Leonid 'n3o' Knyazev $
 
+import knex from 'knex';
 import { Service } from '../../base';
 
-import knex from 'knex';
-
 class DatabaseService extends Service {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'Database',
@@ -16,10 +12,6 @@ class DatabaseService extends Service {
         });
     }
 
-
-    /**
-     * @override
-     */
     async configure(params = {}) {
         if (this.config.has('database')) {
             Object.assign(params, this.config.get('database'));
@@ -28,10 +20,6 @@ class DatabaseService extends Service {
         await super.configure(params);
     }
 
-
-    /**
-     * @override
-     */
     async start() {
         // Database connections pool.
         this.database = knex({
@@ -48,10 +36,6 @@ class DatabaseService extends Service {
         });
     }
 
-
-    /**
-     * @override
-     */
     provide() {
         return this.database;
     }

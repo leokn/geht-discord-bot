@@ -1,16 +1,10 @@
 // $ID: index.js, 22 Jan 2018, 15:28, Leonid 'n3o' Knyazev $
 
 import chalk from 'chalk';
-import moment from 'moment';
-
 import { Logger as BaseLogger } from 'winston';
-
 import transports from './transports';
 
 class Logger extends BaseLogger {
-    /**
-     * @constructor
-     */
     constructor() {
         // Instantiate 'winston' Logger.
         super();
@@ -24,10 +18,6 @@ class Logger extends BaseLogger {
         return this.cli();
     }
 
-
-    /**
-     * @banner
-     */
     banner(bot) {
         if (bot) {
             // empty line
@@ -53,10 +43,6 @@ class Logger extends BaseLogger {
         }
     }
 
-
-    /**
-     * @print
-     */
     print(message, color, background) {
         if (!color && !background) {
             console.log(message);

@@ -4,19 +4,12 @@ import { Embed } from '../../base';
 import StringUtils from '../String';
 
 class Messenger {
-    /**
-     * @send
-     */
     static send(channel, content) {
         const embed = this.embed(content);
 
         return channel.send({ embed }).catch(() => null);
     }
 
-
-    /**
-     * @embed
-     */
     static embed(content) {
         const { title = null, description = null, footer = null, color = null } = content;
 

@@ -2,14 +2,10 @@
 
 import { Event } from '../../base';
 import { Constants } from '../../utils';
-
 import { CommandError } from 'patron.js';
 import { DiscordAPIError } from 'discord.js';
 
 class MessageEvent extends Event {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'message',
@@ -17,16 +13,9 @@ class MessageEvent extends Event {
         });
     }
 
-
-    /**
-     * @override
-     */
     async handler(input) {
-        return this.filter(input)
+        this.filter(input)
             .then(async (message) => {
-                // message
-                const { content: messageContent, channel: { type: channelType } } = message;
-
                 // Logging received message...
                 this.messageLog(message);
 
@@ -40,10 +29,6 @@ class MessageEvent extends Event {
             });
     }
 
-
-    /**
-     * @result
-     */
     async result(result, message) {
         const { prefix = '' } = this.params;
 
@@ -92,10 +77,6 @@ class MessageEvent extends Event {
         }
     }
 
-
-    /**
-     * @filter
-     */
     async filter(input) {
         return new Promise((resolve, reject) => {
             const { user: { id: botId } } = this.bot;
@@ -109,8 +90,10 @@ class MessageEvent extends Event {
 
             const isBot = authorBot || authorId === botId;
             const isDirect = channelType && channelType === 'dm';
-            const isChannels = !isDirect && channels.length === 0 || (
-                channels.indexOf(channelId) !== -1 || channels.indexOf(channelName) !== -1
+            const isChannels = !isDirect && (
+                channels.length === 0 ||
+                channels.indexOf(channelId) !== -1 ||
+                channels.indexOf(channelName) !== -1
             );
 
             // set 'input' prefix...
@@ -135,10 +118,6 @@ class MessageEvent extends Event {
         });
     }
 
-
-    /**
-     * @messageLog
-     */
     messageLog(message) {
         const {
             id: messageId,

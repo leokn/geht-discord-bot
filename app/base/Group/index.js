@@ -3,9 +3,6 @@
 import { Group as BaseGroup } from 'patron.js';
 
 class Group extends BaseGroup {
-    /**
-     * @override
-     */
     constructor(options = {}) {
         super(options);
 
@@ -15,10 +12,6 @@ class Group extends BaseGroup {
         this.params = {};
     }
 
-
-    /**
-     * @register
-     */
     register(bot = null, log = null, config = null, params = {}) {
         // Register Bot instance.
         Object.defineProperty(this, 'bot', {

@@ -3,9 +3,6 @@
 import { Command, Argument } from '../../../base';
 
 class TestCommand extends Command {
-    /**
-     * @override
-     */
     constructor() {
         super({
             names: ['test'],
@@ -25,14 +22,9 @@ class TestCommand extends Command {
         });
     }
 
-
-    /**
-     * @override
-     */
     async run(msg) {
-        //msg.reply(`Tested!\nInvite: https://discordapp.com/oauth2/authorize?client_id=${this.bot.user.id}&scope=bot&permissions=8`);
-
-        msg.reply(`Tested!`);
+        // msg.reply(`Tested!\nInvite: https://discordapp.com/oauth2/authorize?client_id=${this.bot.user.id}&scope=bot&permissions=8`);
+        msg.reply('Tested!');
     }
 }
 

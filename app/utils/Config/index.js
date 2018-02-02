@@ -4,9 +4,6 @@ import fs from 'fs';
 import path from 'path';
 
 class Config {
-    /**
-     * @constructor
-     */
     constructor() {
         // https://www.npmjs.com/package/config
         process.env.NODE_CONFIG_ENV = 'config';
@@ -21,10 +18,6 @@ class Config {
         this.config.version = '0.0.1';
     }
 
-
-    /**
-     * @check
-     */
     async check(bot) {
         bot.log.info('Checking configuration...');
 
@@ -48,18 +41,10 @@ class Config {
         }
     }
 
-
-    /**
-     * @get
-     */
     get(option) {
         return this.config.get(option);
     }
 
-
-    /**
-     * @has
-     */
     has(option) {
         return this.config.has(option);
     }

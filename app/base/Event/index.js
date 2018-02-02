@@ -1,9 +1,6 @@
 // $ID: index.js, 23 Jan 2018, 12:26, Leonid 'n3o' Knyazev $
 
 class Event {
-    /**
-     * @constructor
-     */
     constructor(event = {}) {
         /**
          * Event name.
@@ -30,10 +27,6 @@ class Event {
         this.params = {};
     }
 
-
-    /**
-     * @register
-     */
     async register(bot = null, log = null, config = null, params = {}) {
         // Register Bot instance.
         Object.defineProperty(this, 'bot', {
@@ -60,10 +53,6 @@ class Event {
         });
     }
 
-
-    /**
-     * @handler
-     */
     async handler() {}
 }
 

@@ -1,14 +1,10 @@
 // $ID: index.js, 22 Jan 2018, 20:17, Leonid 'n3o' Knyazev $
 
-import { Service } from '../../base';
-
 import redis from 'redis';
 import bluebird from 'bluebird';
+import { Service } from '../../base';
 
 class RedisService extends Service {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'Redis',
@@ -17,10 +13,6 @@ class RedisService extends Service {
         });
     }
 
-
-    /**
-     * @override
-     */
     async configure(params = {}) {
         if (this.config.has('redis')) {
             Object.assign(params, this.config.get('redis'));
@@ -33,10 +25,6 @@ class RedisService extends Service {
         bluebird.promisifyAll(redis.Multi.prototype);
     }
 
-
-    /**
-     * @override
-     */
     async start() {
         // Redis client.
         this.redis = redis.createClient(this.params.port, this.params.host);
@@ -44,10 +32,6 @@ class RedisService extends Service {
         this.redis.on('error', error => this.log.error(error));
     }
 
-
-    /**
-     * @override
-     */
     provide() {
         return this.redis;
     }

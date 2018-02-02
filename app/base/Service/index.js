@@ -3,9 +3,6 @@
 import Events from 'events';
 
 class Service extends Events {
-    /**
-     * @constructor
-     */
     constructor(service = {}) {
         super();
 
@@ -43,10 +40,6 @@ class Service extends Events {
         this.params = {};
     }
 
-
-    /**
-     * @register
-     */
     async register(bot = null, log = null, config = null) {
         // Register Bot instance.
         Object.defineProperty(this, 'bot', {
@@ -68,24 +61,12 @@ class Service extends Events {
         }
     }
 
-
-    /**
-     * @configure
-     */
     async configure(params = {}) {
         Object.assign(this.params, params);
     }
 
-
-    /**
-     * @start
-     */
     async start() {}
 
-
-    /**
-     * @provide
-     */
     provide() {
         return this;
     }

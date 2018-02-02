@@ -3,9 +3,6 @@
 import { Group } from '../../base';
 
 class Moderator extends Group {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'moderator',

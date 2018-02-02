@@ -8,9 +8,6 @@ import Plugins from './plugins';
 import Services from './services';
 
 class Bot extends Client {
-    /**
-     * @constructor
-     */
     constructor() {
         super();
 
@@ -63,10 +60,6 @@ class Bot extends Client {
         this.plugins ={};
     }
 
-
-    /**
-     * @init
-     */
     async init() {
         this.log.info('Init...', { section: true });
 
@@ -77,10 +70,6 @@ class Bot extends Client {
         this.registry.registerDefaultTypeReaders();
     }
 
-
-    /**
-     * @load
-     */
     async load() {
         this.log.info('Loading...', { section: true });
 
@@ -138,10 +127,6 @@ class Bot extends Client {
         await Promise.all([services, modules, plugins]);
     }
 
-
-    /**
-     * @start
-     */
     async start() {
         this.log.banner(this);
 
@@ -153,26 +138,14 @@ class Bot extends Client {
         this.log.info('Started.', { success: true });
     }
 
-
-    /**
-     * @connect
-     */
     async connect() {
         await this.login(this.config.get('token'));
     }
 
-
-    /**
-     * @service
-     */
     service(id) {
         return this[id];
     }
 
-
-    /**
-     * @module
-     */
     module(id) {
         return this.modules[id];
     }

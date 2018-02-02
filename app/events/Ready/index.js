@@ -4,9 +4,6 @@ import { Event, Embed } from '../../base';
 import { Constants } from '../../utils';
 
 class ReadyEvent extends Event {
-    /**
-     * @override
-     */
     constructor() {
         super({
             name: 'ready',
@@ -14,10 +11,6 @@ class ReadyEvent extends Event {
         });
     }
 
-
-    /**
-     * @override
-     */
     async handler() {
         const { prefix = '', status = '' } = this.params;
 
@@ -32,12 +25,6 @@ class ReadyEvent extends Event {
         await this.onReboot();
     }
 
-
-    /**
-     * @onReboot
-     * Check 'reboot' flag in the cache.
-     * If exist, then send a notification to the user, who called 'reboot' command.
-     */
     async onReboot() {
         const id = await this.bot.cache.getAsync('reboot');
 

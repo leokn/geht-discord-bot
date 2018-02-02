@@ -1,9 +1,6 @@
 // $ID: index.js, 29 Jan 2018, 17:53, Leonid 'n3o' Knyazev $
 
 class NumberUtils {
-    /**
-     * @msToTime
-     */
     static msToTime(input) {
         return {
             days: parseInt(input / (1000 * 60 * 60 * 24), 10),
@@ -14,10 +11,6 @@ class NumberUtils {
         }
     }
 
-
-    /**
-     * @isEven
-     */
     static isEven(input) {
         return input % 2 === 0;
     }

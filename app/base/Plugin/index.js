@@ -3,9 +3,6 @@
 import Events from 'events';
 
 class Plugin extends Events {
-    /**
-     * @constructor
-     */
     constructor(bot, params) {
         super();
 

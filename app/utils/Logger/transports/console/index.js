@@ -2,13 +2,9 @@
 
 import chalk from 'chalk';
 import moment from 'moment';
-
 import { transports, config } from 'winston';
 
 class Console extends transports.Console {
-    /**
-     * @override
-     */
     constructor() {
         // DEBUG mode?
         const DEBUG = process.env.NODE_ENV !== 'production' || process.env.DEBUG === 'true';
@@ -32,22 +28,6 @@ class Console extends transports.Console {
         this.rewriters = [this.rewriter.bind(this)];
     }
 
-
-    /**
-     * @formatter
-     */
-    format(options) {
-        const time = this.getTime();
-        const level = this.getLevel(options);
-        const message = this.getMessage(options);
-
-        return `${time} ${level} ${message}`;
-    }
-
-
-    /**
-     * @rewriter
-     */
     rewriter(...args) {
         const [,, meta] = [...args];
 
@@ -63,36 +43,28 @@ class Console extends transports.Console {
         return meta;
     }
 
-
-    /**
-     * @filter
-     */
     filter(...args) {
         const [, msg] = [...args];
 
         return msg;
     }
 
+    format(options) {
+        const time = this.getTime();
+        const level = this.getLevel(options);
+        const message = this.getMessage(options);
 
-    /**
-     * @getTime
-     */
+        return `${time} ${level} ${message}`;
+    }
+
     getTime() {
         return chalk.cyan(`[${moment().format('YYYY-MM-DD HH:mm:ss')}]`);
     }
 
-
-    /**
-     * @getLevel
-     */
     getLevel(options) {
         return config.colorize(options.level, `[${options.level.toUpperCase()}]`);
     }
 
-
-    /**
-     * @getMessage
-     */
     getMessage(options) {
         const {
             section = false,

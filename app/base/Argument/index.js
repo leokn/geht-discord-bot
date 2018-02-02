@@ -3,9 +3,6 @@
 import { Argument as BaseArgument } from 'patron.js';
 
 class Argument extends BaseArgument {
-    /**
-     * @override
-     */
     constructor(options = {}) {
         super(options);
     }

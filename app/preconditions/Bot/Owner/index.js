@@ -3,9 +3,6 @@
 import { Precondition, PreconditionResult } from '../../../base';
 
 class Owner extends Precondition {
-    /**
-     * @override
-     */
     async run(command, msg) {
         const owners = command.bot.config.get('owners');
 
