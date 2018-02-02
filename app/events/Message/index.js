@@ -28,26 +28,15 @@ class MessageEvent extends Event {
                 const { content: messageContent, channel: { type: channelType } } = message;
 
                 // Logging received message...
-                if (this.bot.debug) {
-                    this.messageLog(message);
-                }
+                this.messageLog(message);
 
-                // checking prefix...
-                let { prefix = '' } = this.params;
-
-                // reset prefix if we receive a DM message and content not starts with prefix.
-                if (channelType === 'dm' && !messageContent.startsWith(prefix)) {
-                    prefix = '';
-                }
-
-                const result = await this.bot.handler.run(message, prefix);
+                // Handling command...
+                const result = await this.bot.handler.run(message, message.prefix);
 
                 return this.result(result, message);
             })
             .catch(error => {
-                if (this.bot.debug) {
-                    this.bot.log.info(`[message] ${error}`);
-                }
+                this.log.debug(`[message] ${error}`);
             });
     }
 
@@ -109,26 +98,36 @@ class MessageEvent extends Event {
      */
     async filter(input) {
         return new Promise((resolve, reject) => {
+            const { user: { id: botId } } = this.bot;
             const { prefix = '', channels = [] } = this.params;
 
             const {
                 content,
-                author: { id: authorId, bot: authorBot },
-                channel: { id: channelId, type: channelType }
+                author: { id: authorId, bot: authorBot = false },
+                channel: { id: channelId, type: channelType, name: channelName }
             } = input;
 
-            // [filtered]: if message author is bot-self or another bot.
-            if (authorBot === true || authorId === this.bot.user.id) {
+            const isBot = authorBot || authorId === botId;
+            const isDirect = channelType && channelType === 'dm';
+            const isChannels = !isDirect && channels.length === 0 || (
+                channels.indexOf(channelId) !== -1 || channels.indexOf(channelName) !== -1
+            );
+
+            // set 'input' prefix...
+            input.prefix = (isDirect && !content.startsWith(prefix)) ? '' : prefix;
+
+            if (isBot) {
+                // [filtered]: if message author is bot-self or another bot.
                 return reject(`Filtered by 'self-bot' filter: ${content}`);
             }
 
-            // [filtered]: if message not a DM and sended to a channel which not in 'commands.channels' list.
-            if (channelType !== 'dm' && channels.length && channels.indexOf(channelId)) {
+            if (!isDirect && !isChannels) {
+                // [filtered]: if message not a DM and sended to a channel which not in 'commands.channels' list.
                 return reject(`Filtered by 'commands.channels' filter: ${content}`);
             }
 
-            // [filtered]: if message not a DM and not starts with 'commands.prefix'
-            if (channelType !== 'dm' && prefix && !content.startsWith(prefix)) {
+            if (!isDirect && !content.startsWith(prefix)) {
+                // [filtered]: if message not a DM and not starts with 'commands.prefix'
                 return reject(`Filtered by 'commands.prefix' filter: ${content}`);
             }
 
@@ -166,7 +165,7 @@ class MessageEvent extends Event {
         log = `${log} | content: ${messageContent}`;
 
         // Debug log all commands *before* execution begins.
-        this.bot.log.info(log);
+        this.log.debug(log);
     }
 }
 

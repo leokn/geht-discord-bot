@@ -26,3 +26,6 @@ If command sended in 'text' channels (INCLUDING channels from 'commands.channels
  - the response will be depend from the command params:
    - can be send as DM to the message author
    - can be send to the channel when this command was received
+
+
+TODO: Add 'mention' message checker.
