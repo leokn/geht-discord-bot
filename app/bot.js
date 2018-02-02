@@ -86,10 +86,6 @@ class Bot extends Client {
 
                 if (service.provides && Array.isArray(service.provides)) {
                     service.provides.forEach(id => {
-                        if (this[id]) {
-                            throw new Error(`[${id}] already registered. Choose another provides for [${service.name}] service.`);
-                        }
-
                         this[id] = service.provide();
                     });
                 }
@@ -134,12 +130,14 @@ class Bot extends Client {
         await this.load();
 
         this.log.info('Starting...', { section: true });
+
         await this.connect();
-        this.log.info('Started.', { success: true });
     }
 
     async connect() {
         await this.login(this.config.get('token'));
+
+        this.log.info('Started.', { success: true });
     }
 
     service(id) {
