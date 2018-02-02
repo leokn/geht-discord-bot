@@ -1,0 +1,28 @@
+==== Explanation for 'commands.channels' option ====
+
+The Bot can receive commands:
+ - sended as DM to the bot
+ - sended in others 'text' channels on the server
+
+
+== Receiving commands ==
+If 'commands.channels' option are empty:
+ - Bot listen DM messages (the command 'prefix' is NOT required)
+ - Bot listen messages in all others 'text' channels on the server (the command 'prefix' is REQUIRED)
+
+If 'commands.channels' option NOT empty:
+ - Bot listen DM messages (the command 'prefix' is NOT required)
+ - Bot listen messages only in channels from 'commands.channels' option (the command 'prefix' is REQUIRED)
+ - Others 'text' channels on the server are IGNORED.
+
+
+== Responding to the command ==
+If command sended as DM message to the bot:
+ - the command 'prefix' is NOT required
+ - the response will be sended as DM to the message author
+
+If command sended in 'text' channels (INCLUDING channels from 'commands.channels' option) on the server:
+ - the command 'prefix' is REQUIRED
+ - the response will be depend from the command params:
+   - can be send as DM to the message author
+   - can be send to the channel when this command was received
