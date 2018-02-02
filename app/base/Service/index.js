@@ -47,20 +47,20 @@ class Service extends Events {
     /**
      * @register
      */
-    async register(log = null, config = null, bot = null) {
+    async register(bot = null, log = null, config = null) {
+        // Register Bot instance.
+        Object.defineProperty(this, 'bot', {
+            value: bot
+        });
+
         // Register Logger instance.
-        Object.assign(this, 'log', {
+        Object.defineProperty(this, 'log', {
             value: log
         });
 
         // Register Config instance.
-        Object.assign(this, 'config', {
+        Object.defineProperty(this, 'config', {
             value: config
-        });
-
-        // Register Bot instance.
-        Object.assign(this, 'bot', {
-            value: bot
         });
 
         if (this.log !== null) {
@@ -72,19 +72,15 @@ class Service extends Events {
     /**
      * @configure
      */
-    async configure() {}
+    async configure(params = {}) {
+        Object.assign(this.params, params);
+    }
 
 
     /**
      * @start
      */
     async start() {}
-
-
-    /**
-     * @stop
-     */
-    async stop() {}
 
 
     /**

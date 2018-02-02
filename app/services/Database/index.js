@@ -22,10 +22,10 @@ class DatabaseService extends Service {
      */
     async configure(params = {}) {
         if (this.config.has('database')) {
-            Object.assign(params, this.bot.config.get('database'));
+            Object.assign(params, this.config.get('database'));
         }
 
-        Object.assign(this.params, params);
+        await super.configure(params);
     }
 
 

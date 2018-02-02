@@ -13,7 +13,7 @@ class MessageEvent extends Event {
     constructor() {
         super({
             name: 'message',
-            types: [Constants.Events.MESSAGE_CREATE]
+            events: [Constants.Events.MESSAGE_CREATE]
         });
     }
 

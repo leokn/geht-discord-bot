@@ -91,7 +91,7 @@ class Bot extends Client {
             Object.keys(Services).forEach(async (name) => {
                 const service = Services[name];
 
-                await service.register(this.log, this.config, this);
+                await service.register(this, this.log, this.config);
                 await service.configure();
                 await service.start();
 
@@ -116,9 +116,7 @@ class Bot extends Client {
             Object.keys(Modules).forEach(async (name) => {
                 const module = Modules[name];
 
-                this.log.info(`Loading [${module.name}] module...`);
-
-                await module.register(this);
+                await module.register(this, this.log, this.config);
                 await module.configure();
                 await module.start();
 
@@ -151,7 +149,7 @@ class Bot extends Client {
         await this.load();
 
         this.log.info('Starting...', { section: true });
-        //await this.connect();
+        await this.connect();
         this.log.info('Started.', { success: true });
     }
 

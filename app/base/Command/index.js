@@ -19,9 +19,23 @@ class Command extends BaseCommand {
     /**
      * @register
      */
-    register(bot = null, params = {}) {
-        this.bot = bot;
+    register(bot = null, log = null, config = null, params = {}) {
+        // Register Bot instance.
+        Object.defineProperty(this, 'bot', {
+            value: bot
+        });
 
+        // Register Logger instance.
+        Object.defineProperty(this, 'log', {
+            value: log
+        });
+
+        // Register Config instance.
+        Object.defineProperty(this, 'config', {
+            value: config
+        });
+
+        // Configuring...
         Object.assign(params, this.params);
         Object.assign(this.params, params);
     }

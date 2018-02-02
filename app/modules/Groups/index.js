@@ -19,8 +19,16 @@ class GroupsService extends Module {
     /**
      * @override
      */
-    async configure() {
-        this.params = this.bot.config.get('discord');
+    async configure(params = {}) {
+        if (this.config.has('discord')) {
+            Object.assign(params, this.config.get('discord'));
+        }
+
+        if (this.config.has('commands')) {
+            Object.assign(params, this.config.get('commands'));
+        }
+
+        await super.configure(params);
     }
 
 
@@ -31,8 +39,7 @@ class GroupsService extends Module {
         const groups = [];
 
         Object.keys(Groups).forEach(name => {
-            // Register module in the group.
-            Groups[name].register(this.bot, this.params);
+            Groups[name].register(this.bot, this.log, this.config, this.params);
 
             groups.push(Groups[name]);
         });

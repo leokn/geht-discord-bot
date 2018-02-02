@@ -6,7 +6,7 @@ class Module extends Events {
     /**
      * @constructor
      */
-    constructor(service = {}) {
+    constructor(module = {}) {
         super();
 
         /**
@@ -15,7 +15,7 @@ class Module extends Events {
          * @readonly
          */
         Object.defineProperty(this, 'name', {
-            value: service.name
+            value: module.name
         });
 
         /**
@@ -24,14 +24,8 @@ class Module extends Events {
          * @readonly
          */
         Object.defineProperty(this, 'description', {
-            value: service.description
+            value: module.description
         });
-
-        /**
-         * Bot instance.
-         * @type {Bot}
-         */
-        this.bot = null;
 
         /**
          * Service params.
@@ -44,15 +38,34 @@ class Module extends Events {
     /**
      * @register
      */
-    async register(bot = null) {
-        this.bot = bot;
+    async register(bot = null, log = null, config = null) {
+        // Register Bot instance.
+        Object.defineProperty(this, 'bot', {
+            value: bot
+        });
+
+        // Register Logger instance.
+        Object.defineProperty(this, 'log', {
+            value: log
+        });
+
+        // Register Config instance.
+        Object.defineProperty(this, 'config', {
+            value: config
+        });
+
+        if (this.log !== null) {
+            this.log.info(`Loading [${this.name}] module...`);
+        }
     }
 
 
     /**
      * @configure
      */
-    async configure() {}
+    async configure(params = {}) {
+        Object.assign(this.params, params);
+    }
 
 
     /**

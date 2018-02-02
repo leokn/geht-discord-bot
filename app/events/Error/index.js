@@ -10,7 +10,7 @@ class ErrorEvent extends Event {
     constructor() {
         super({
             name: 'error',
-            types: [Constants.Events.ERROR]
+            events: [Constants.Events.ERROR]
         });
     }
 }

@@ -10,7 +10,7 @@ class ReadyEvent extends Event {
     constructor() {
         super({
             name: 'ready',
-            types: [Constants.Events.READY]
+            events: [Constants.Events.READY]
         });
     }
 

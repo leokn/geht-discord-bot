@@ -10,7 +10,7 @@ class WarnEvent extends Event {
     constructor() {
         super({
             name: 'warn',
-            types: [Constants.Events.WARN]
+            events: [Constants.Events.WARN]
         });
     }
 }

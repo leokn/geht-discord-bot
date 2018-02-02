@@ -19,15 +19,9 @@ class Event {
          * @type {array|string}
          * @readonly
          */
-        Object.defineProperty(this, 'types', {
-            value: event.types
+        Object.defineProperty(this, 'events', {
+            value: event.events
         });
-
-        /**
-         * Bot instance.
-         * @type {Bot}
-         */
-        this.bot = null;
 
         /**
          * Service params.
@@ -40,18 +34,29 @@ class Event {
     /**
      * @register
      */
-    async register(bot = null, params = {}) {
-        if (!bot) {
-            throw new Error('You must pass the Bot instance to the register method.');
-        }
+    async register(bot = null, log = null, config = null, params = {}) {
+        // Register Bot instance.
+        Object.defineProperty(this, 'bot', {
+            value: bot
+        });
 
-        this.bot = bot;
+        // Register Logger instance.
+        Object.defineProperty(this, 'log', {
+            value: log
+        });
 
+        // Register Config instance.
+        Object.defineProperty(this, 'config', {
+            value: config
+        });
+
+        // Configuring...
         Object.assign(params, this.params);
         Object.assign(this.params, params);
 
-        this.types.forEach(type => {
-            this.bot.on(type, this.handler.bind(this));
+        // Registering event handler in Discord client.
+        this.events.forEach(event => {
+            this.bot.on(event, this.handler.bind(this));
         });
     }
 

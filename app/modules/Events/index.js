@@ -20,15 +20,15 @@ class EventsModule extends Module {
      * @override
      */
     async configure(params = {}) {
-        if (this.bot.config.has('discord')) {
-            Object.assign(params, this.bot.config.get('discord'));
+        if (this.config.has('discord')) {
+            Object.assign(params, this.config.get('discord'));
         }
 
-        if (this.bot.config.has('commands')) {
-            Object.assign(params, this.bot.config.get('commands'));
+        if (this.config.has('commands')) {
+            Object.assign(params, this.config.get('commands'));
         }
 
-        Object.assign(this.params, params);
+        await super.configure(params);
     }
 
 
@@ -37,7 +37,7 @@ class EventsModule extends Module {
      */
     async start() {
         // Registering Discord Events...
-        Object.keys(Events).forEach(name => Events[name].register(this.bot, this.params));
+        Object.keys(Events).forEach(name => Events[name].register(this.bot, this.log, this.config, this.params));
     }
 }
 

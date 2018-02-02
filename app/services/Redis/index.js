@@ -23,10 +23,10 @@ class RedisService extends Service {
      */
     async configure(params = {}) {
         if (this.config.has('redis')) {
-            Object.assign(params, this.bot.config.get('redis'));
+            Object.assign(params, this.config.get('redis'));
         }
 
-        Object.assign(this.params, params);
+        await super.configure(params);
 
         // Promisifying redis...
         bluebird.promisifyAll(redis.RedisClient.prototype);

@@ -29,7 +29,7 @@ class TestCommand extends Command {
     /**
      * @override
      */
-    async run(msg, args) {
+    async run(msg) {
         msg.reply('Tested!');
     }
 }

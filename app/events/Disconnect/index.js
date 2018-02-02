@@ -10,7 +10,7 @@ class DisconnectEvent extends Event {
     constructor() {
         super({
             name: 'disconnect',
-            types: [Constants.Events.DISCONNECT]
+            events: [Constants.Events.DISCONNECT]
         });
     }
 }

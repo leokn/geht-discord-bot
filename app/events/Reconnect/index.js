@@ -10,7 +10,7 @@ class ReconnectEvent extends Event {
     constructor() {
         super({
             name: 'reconnect',
-            types: [Constants.Events.RECONNECT]
+            events: [Constants.Events.RECONNECT]
         });
     }
 }
