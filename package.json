@@ -43,7 +43,8 @@
         "bluebird": "^3",
         "discord.js": "^11",
         "patron.js": "^2",
-        "winston": "^2"
+        "winston": "^2",
+        "winston-daily-rotate-file": "^1"
     },
     "devDependencies": {
         "babel-eslint": "^8",
