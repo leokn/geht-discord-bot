@@ -1,0 +1,11 @@
+==== Functionality planing =====
+
+== integration with 'geht.team' ==
+- getting data from https://api.geht.team
+- collecting data on https://api.geht.team
+- mb functionality to auto send some records to www.speedrun.com
+
+== integration with www.speedrun.com ==
+
+== integration with 'twitch' / 'youtube' for streamers ==
+
